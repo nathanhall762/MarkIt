@@ -1,9 +1,27 @@
-import React from 'react';
+import Nav from './Nav';
+import DropdownSelector from './DropDownSelector';
+import QRScannerViewport from './QRScannerViewport';
+import ActionTypeSelector from './ActionTypeSelector';
+import ItemCard from './ItemCard';
+import ItemPage from './ItemPage';
+import CameraDrawer from './CameraDrawer';
+import InputDrawer from './InputDrawer';
+import PriceSlider from './PriceSlider';
 
 const App: React.FC = () => {
   return (
-    <div className='w-[360px] h-[800px] mx-auto bg-white'>
-      <h1 className='h1'>Title</h1>
+    <div className='mx-auto max-w-3xl bg-white'>
+      <div className='h-[88vh] flex items-center flex-col justify-evenly overflow-scroll md:overflow-auto'>
+		<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />
+		{/* <ItemCard actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' key={1} /> */}
+		{/* <DropdownSelector /> */}
+		{/* <QRScannerViewport /> */}
+		{/* <ActionTypeSelector /> */}
+		{/* <CameraDrawer /> */}
+		{/* <InputDrawer dataName='Description' rows={4}/> */}
+		{/* <PriceSlider instructions='Select acceptable price minimum and maximum.' min={0} max={500} step={5} /> */}
+	  </div>
+      <Nav />
     </div>
   );
 };
