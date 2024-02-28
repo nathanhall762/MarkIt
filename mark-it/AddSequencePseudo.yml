@@ -1,10 +1,12 @@
 - rendering: DropDownSelector + ItemCard
   Nav: Search + Add + Hamburger
+  conditions: selectedCollection not Null -> highlight Add
   on click - Add Button -> Step++
 
 - rendering: QRScannerViewport + DropDownSelector
   Nav: Back + inactive + Hamburger
-  on successful scan - QR Scanner -> Step++
+  highlight Back
+  conditions: selectedCollection not Null, QRCode not Null -> Step++
 
 - rendering: ActionTypeSelector
   Nav: Back + Next + Hamburger
