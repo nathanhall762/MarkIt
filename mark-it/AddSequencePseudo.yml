@@ -1,0 +1,78 @@
+- rendering: DropDownSelector + ItemCard
+  Nav: Search + Add + Hamburger
+  on click - Add Button -> Step++
+
+- rendering: QRScannerViewport + DropDownSelector
+  Nav: Back + inactive + Hamburger
+  on successful scan - QR Scanner -> Step++
+
+- rendering: ActionTypeSelector
+  Nav: Back + Next + Hamburger
+  on Action Type Selector Selected = true -> Next true
+    highlight Next + Action Type Selector selected option only
+    on click - Next -> Step++
+
+- rendering: ItemCard + CameraDrawer
+  ItemCard: Photo Viewfinder + Action Type
+  CameraDrawer: Ellipse 0
+  Nav: Back + camera+ Hamburger
+  on click - camera-> Next true
+    rendering: ItemCard + CameraDrawer
+    ItemCard: Photo + Action Type
+    Nav: Back + Next + Hamburger
+    highlight Next
+    on click - Next -> Step++
+
+- rendering: ItemPage + CameraDrawer
+  ItemPage: Photo Viewfinder + Ellipse 1 + Action Type
+  CameraDrawer: Ellipse 0 + Ellipse 1
+  Nav: Back + camera+ Hamburger
+  on click - camera-> Next true
+    rendering: ItemPage + CameraDrawer
+    ItemPage: Photo + Action Type
+    Nav: Back + Next + Hamburger
+    highlight Next
+    on click - Next -> Step++
+
+- rendering: ItemPage + CameraDrawer
+  ItemPage: Photo Viewfinder + Ellipse 2 + Action Type
+  CameraDrawer: Ellipse 0 + Ellipse 1 + Ellipse 2
+  Nav: Back + camera+ Hamburger
+  on click - camera-> Next true
+    rendering: ItemPage + CameraDrawer
+    ItemPage: Photo + Action Type
+    Nav: Back + Next + Hamburger
+    highlight Next
+    on click - Next -> Step++
+
+- rendering: ItemPage + InputDrawer for Title
+  ItemPage: Photo + Ellipse 0 + Action Type
+  Nav: Back + Next + Hamburger
+  on InputDrawer = true -> Next true
+    rendering: ItemPage + InputDrawer for Title
+    ItemPage: Photo + Ellipse 0 + Title + Action Type
+    Nav: Back + Next + Hamburger
+    highlight Next
+    on click - Next -> Step++
+
+- rendering: ItemPage + InputDrawer for Description
+  ItemPage: Photo + Ellipse 0 + Title + Action Type
+  Nav: Back + Next + Hamburger
+  highlight Next
+  on click - Next -> Step++
+
+- rendering: ItemPage + InputDrawer for Price
+  ItemPage: Photo + Ellipse 0 + Title + Description + Action Type
+  Nav: Back + Next + Hamburger
+  on InputDrawer = true -> Next true
+    rendering: ItemPage + InputDrawer for Price
+    ItemPage: Photo + Ellipse 0 + Title + Description + Price + Action Type
+    Nav: Back + Next + Hamburger
+    highlight Next
+    on click - Next -> Step++
+
+- rendering: ItemPage + Info Drawer
+  ItemPage: Photo + Ellipse 0 + Title + Description + Price + Action Type
+  Nav: Back + Check + Hamburger
+  highlight Check
+  on click - Check -> Step 0
