@@ -52,11 +52,16 @@ export const useStepRules = () => {
   const photos = useAddSequenceStore((state) => state.photos);
   const setPhotos = useAddSequenceStore((state) => state.setPhotos);
   const title = useAddSequenceStore((state) => state.title);
+  const setTitle = useAddSequenceStore((state) => state.setTitle);
+  const description = useAddSequenceStore((state) => state.description);
+  const titlePreview = useAddSequenceStore((state) => state.titlePreview);
+  const setTitlePreview = useAddSequenceStore((state) => state.setTitlePreview);
 
   // Define the rules for each step
   const stepRules: { [key: number]: () => void } = {
     0: () => {
       dumpWorkingItem();
+      setCenterButtonIcon('tabler:plus');
       setSelectedCollection('My Storage Unit');
       setIsCenterButtonEnabled(true);
       setLeftButtonIcon('material-symbols:search');
@@ -105,7 +110,30 @@ export const useStepRules = () => {
       }
     },
     6: () => {
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title) {
+      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && titlePreview !== '') {
+        setIsCenterButtonEnabled(true);
+      } else {
+        setIsCenterButtonEnabled(false);
+      }
+    },
+    7: () => {
+      setTitle(titlePreview);
+      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
+        setIsCenterButtonEnabled(true);
+      } else {
+        setIsCenterButtonEnabled(false);
+      }
+    },
+    8: () => {
+      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
+        setIsCenterButtonEnabled(true);
+      } else {
+        setIsCenterButtonEnabled(false);
+      }
+    },
+    9: () => {
+      setCenterButtonIcon('ph:check-bold');
+      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);

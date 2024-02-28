@@ -6,7 +6,9 @@ export default function NavButton(): React.ReactElement {
 	const setCurrentStep = useAddSequenceStore((state) => state.setCurrentStep);
 	
 	const onClick = () => {
-		setCurrentStep((prevStep) => (prevStep - 1));
+		if (icon === 'ep:back') {
+			setCurrentStep((prevStep) => prevStep - 1);
+		}
 	}
 	return (
 		<button onClick={onClick}>

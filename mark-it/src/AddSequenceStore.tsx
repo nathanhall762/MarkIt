@@ -9,6 +9,10 @@ interface AddSequenceState {
   setCenterButtonIcon: (centerButtonIcon: string) => void;
   leftButtonIcon: string;
   setLeftButtonIcon: (leftButtonIcon: string) => void;
+  titlePreview: string;
+  setTitlePreview: (titlePreview: string) => void;
+  descriptionPreview: string;
+  setDescriptionPreview: (descriptionPreview: string) => void;
   
 
   // State for the working item
@@ -40,6 +44,10 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   setCenterButtonIcon: (centerButtonIcon: string) => set({ centerButtonIcon }),
   centerButtonIcon: 'tabler:plus',
   setLeftButtonIcon: (leftButtonIcon: string) => set({ leftButtonIcon }),
+  titlePreview: '',
+  setTitlePreview: (titlePreview: string) => set({ titlePreview }),
+  descriptionPreview: '',
+  setDescriptionPreview: (descriptionPreview: string) => set({ descriptionPreview }),
   
 
   // State for the working item
@@ -53,6 +61,8 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
       selectedCollection: 'My Storage Unit',
       QRCode: '',
 	  actionType: '',
+	  title: '',
+	  description: '',
     });
   },
   actionType: '',
