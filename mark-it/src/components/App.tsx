@@ -5,38 +5,24 @@ import ActionTypeSelector from './ActionTypeSelector';
 import ItemCard from './ItemCard';
 import ItemPage from './ItemPage';
 import CameraDrawer from './CameraDrawer';
-import InputDrawer from './InputDrawer';
 import PriceSlider from './PriceSlider';
 import { useStepComponents, useStepRules } from '../StepConfiguration';
 import React, { useEffect } from 'react';
 import useAddSequenceStore from '../AddSequenceStore';
 
 const App: React.FC = () => {
-	const stepComponents = useStepComponents();
-	const currentStep = useAddSequenceStore((state) => state.currentStep);
-	const stepRules = useStepRules();
-	const QRCode = useAddSequenceStore((state) => state.QRCode);
-	const selectedCollection = useAddSequenceStore((state) => state.selectedCollection);
-	const actionType = useAddSequenceStore((state) => state.actionType);
-	const photos = useAddSequenceStore((state) => state.photos);
-	const title = useAddSequenceStore((state) => state.title);
-	const description = useAddSequenceStore((state) => state.description);
+  const stepComponents = useStepComponents();
+  const currentStep = useAddSequenceStore((state) => state.currentStep);
+  const stepRules = useStepRules();
   
-	useEffect(() => {
-	  // Access and execute the rule function for the current step
-	  const ruleForCurrentStep = stepRules[currentStep];
-	  if (typeof ruleForCurrentStep === 'function') {
-		ruleForCurrentStep();
-	  }
-	  console.log('Working Item Data:', {
-		QRCode,
-		selectedCollection,
-		actionType,
-		photos,
-		title,
-		description,
-	  });
-	}, [currentStep, stepRules]);
+
+  useEffect(() => {
+    // Access and execute the rule function for the current step
+    const ruleForCurrentStep = stepRules[currentStep];
+    if (typeof ruleForCurrentStep === 'function') {
+      ruleForCurrentStep();
+    }
+  }, [currentStep, stepRules]);
 
   return (
     <div className='mx-auto max-w-3xl bg-white'>

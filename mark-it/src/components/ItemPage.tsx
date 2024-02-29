@@ -6,6 +6,7 @@ const ItemPage: React.FC<ItemProps> = ({
   title,
   price,
   actionType,
+  description,
 }) => {
   return (
     <div className='flex relative flex-col w-[90vw] text-center justify-start h-full md:w-full md:box-border md:px-4 py-4'>
@@ -24,8 +25,7 @@ const ItemPage: React.FC<ItemProps> = ({
         </div>
       </div>
       <p>
-        Optical audio cable from Amazon Basics, often used to connect a TV to a
-        soundbar. 6ft. New in box.
+        {description}
       </p>
     </div>
   );

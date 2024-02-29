@@ -23,12 +23,18 @@ interface AddSequenceState {
   dumpWorkingItem: () => void;
   actionType: string;
   setActionType: (actionType: string) => void;
-  photos: string[];
-  setPhotos: (photos: string[]) => void;
+  photo1: string;
+  setPhoto1: (photo1: string) => void;
+  photo2: string;
+  setPhoto2: (photo2: string) => void;
+  photo3: string;
+  setPhoto3: (photo3: string) => void;
   title: string;
   setTitle: (title: string) => void;
   description: string;
   setDescription: (description: string) => void;
+  priceRange: number[];
+  setPriceRange: (priceRange: number[]) => void;
 }
 
 const useAddSequenceStore = create<AddSequenceState>((set) => ({
@@ -63,16 +69,27 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
 	  actionType: '',
 	  title: '',
 	  description: '',
+	  photo1: '',
+	  photo2: '',
+	  photo3: '',
+	  titlePreview: '',
+	  descriptionPreview: '',
     });
   },
   actionType: '',
   setActionType: (actionType: string) => set({ actionType }),
-  photos: [],
-  setPhotos: (photos: string[]) => set({ photos }),
+  photo1: '',
+  setPhoto1: (photo1: string) => set({ photo1 }),
+  photo2: '',
+  setPhoto2: (photo2: string) => set({ photo2 }),
+  photo3: '',
+  setPhoto3: (photo3: string) => set({ photo3 }),
   title: '',
   setTitle: (title: string) => set({ title }),
   description: '',
   setDescription: (description: string) => set({ description }),
+  priceRange: [0, 500],
+  setPriceRange: (priceRange: number[]) => set({ priceRange }),
 }));
 
 export default useAddSequenceStore;

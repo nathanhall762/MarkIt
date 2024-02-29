@@ -1,57 +1,90 @@
 import { useEffect, useState } from 'react';
 import useAddSequenceStore from '../AddSequenceStore';
 
-const InputDrawer: React.FC<{ dataName: string; rows: number }> = ({
-  dataName,
-  rows,
-}) => {
-  const [inputValue, setInputValue] = useState('');
-  const setTitle = useAddSequenceStore((state) => state.setTitle);
-  const setDescription = useAddSequenceStore((state) => state.setDescription);
-  const currentStep = useAddSequenceStore((state) => state.currentStep);
-  const title = useAddSequenceStore((state) => state.title);
-  const titlePreview = useAddSequenceStore((state) => state.titlePreview);
-  const description = useAddSequenceStore((state) => state.description);
-  const setTitlePreview = useAddSequenceStore((state) => state.setTitlePreview);
-  const descriptionPreview = useAddSequenceStore((state) => state.description);
-  const setDescriptionPreview = useAddSequenceStore(
-    (state) => state.setDescription
-  );
-  console.log('Current Step:', currentStep);
+export const InputDrawerTitle: React.FC<{ rows: number }> = ({ rows }) => {
+  const { currentStep, titlePreview, setTitlePreview, setTitle } = useAddSequenceStore(state => ({
+    currentStep: state.currentStep,
+    titlePreview: state.titlePreview,
+    setTitlePreview: state.setTitlePreview,
+    setTitle: state.setTitle,
+  }));
 
+  const [inputValue, setInputValue] = useState('');
+
+  // Synchronize inputValue with titlePreview
   useEffect(() => {
-    if (dataName === 'Title') {
-      setTitlePreview(inputValue);
-    } else if (dataName === 'Description') {
-      setDescriptionPreview(inputValue);
-    }
-  }, [inputValue, dataName]);
+    setInputValue(titlePreview);
+  }, [titlePreview]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    setTitlePreview(newValue); // Update the preview in the store as user types
   };
 
-  let placeholderText = '';
-  if (dataName === 'Title') {
-    placeholderText = title;
-  } else if (dataName === 'Description') {
-    placeholderText = description;
-  }
+  // Commit titlePreview to title when moving from step 6 to step 7
+  useEffect(() => {
+    if (currentStep === 7) {
+      setTitle(titlePreview);
+    }
+  }, [currentStep, titlePreview, setTitle]);
 
   return (
     <div className='h-fit w-screen mx-auto max-w-3xl rounded-t-3xl text-center bg-slate-200 absolute bottom-[12vh] py-8 border-t border-black flex flex-col'>
-      <h2 className='mb-2'>Enter {dataName}</h2>
+      <h2 className='mb-2'>Enter Title</h2>
       <textarea
-        name={dataName}
-        id={dataName}
+        name="title"
+        id="title"
         rows={rows}
         value={inputValue}
         onChange={handleInputChange}
-        placeholder={placeholderText}
         className='bg-white p-4 w-stretch rounded-3xl border border-black mx-8'
       />
     </div>
   );
 };
 
-export default InputDrawer;
+
+export const InputDrawerDescription: React.FC<{ rows: number }> = ({ rows }) => {
+  const { currentStep, descriptionPreview, setDescriptionPreview, setDescription } = useAddSequenceStore(state => ({
+    currentStep: state.currentStep,
+    descriptionPreview: state.descriptionPreview,
+    setDescriptionPreview: state.setDescriptionPreview,
+    setDescription: state.setDescription,
+  }));
+
+  const [inputValue, setInputValue] = useState('');
+
+  // Synchronize inputValue with descriptionPreview
+  useEffect(() => {
+    setInputValue(descriptionPreview);
+  }, [descriptionPreview]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = event.target.value;
+    setInputValue(newValue);
+    setDescriptionPreview(newValue); // Update the preview in the store as user types
+  };
+
+  // Commit descriptionPreview to description after a specific action or step transition
+  // Assuming the commit should happen at step 8 or whenever you deem appropriate
+  useEffect(() => {
+    if (currentStep === 8) {
+      setDescription(descriptionPreview);
+    }
+  }, [currentStep, descriptionPreview, setDescription]);
+
+  return (
+    <div className='h-fit w-screen mx-auto max-w-3xl rounded-t-3xl text-center bg-slate-200 absolute bottom-[12vh] py-8 border-t border-black flex flex-col'>
+      <h2 className='mb-2'>Enter Description</h2>
+      <textarea
+        name="description"
+        id="description"
+        rows={rows}
+        value={inputValue}
+        onChange={handleInputChange}
+        className='bg-white p-4 w-stretch rounded-3xl border border-black mx-8'
+      />
+    </div>
+  );
+};

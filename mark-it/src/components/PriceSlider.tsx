@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import useAddSequenceStore from '../AddSequenceStore';
 
 interface PriceSliderProps {
   min: number;
@@ -13,8 +14,10 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
   step,
   instructions: dataName,
 }) => {
-  const [lowerValue, setLowerValue] = useState<number>(min);
-  const [upperValue, setUpperValue] = useState<number>(max);
+  const priceRange = useAddSequenceStore((state) => state.priceRange);
+  const setPriceRange = useAddSequenceStore((state) => state.setPriceRange);
+  const [lowerValue, setLowerValue] = useState<number>(priceRange[0]);
+  const [upperValue, setUpperValue] = useState<number>(priceRange[1]);
 
   const handleLowerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Math.min(
@@ -22,6 +25,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
       upperValue - step
     );
     setLowerValue(newValue);
+    setPriceRange([newValue, upperValue]);
   };
 
   const handleUpperChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +34,8 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
       lowerValue + step
     );
     setUpperValue(newValue);
+    setPriceRange([lowerValue, newValue]);
+
   };
 
   return (

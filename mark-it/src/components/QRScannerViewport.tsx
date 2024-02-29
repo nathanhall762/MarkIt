@@ -1,13 +1,20 @@
 import useAddSequenceStore from "../AddSequenceStore";
 
 const QRScannerViewport = () => {
-  const QRCode = useAddSequenceStore((state) => state.QRCode);
   const setQRCode = useAddSequenceStore((state) => state.setQRCode);
 
-  const onClick = () => {
-    setQRCode('12345');
-    console.log('QR code set to 12345');
+  // Function to generate a simple UUID-like string
+  const generateUUID = () => {
+    const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
   };
+
+  const onClick = () => {
+    const newQRCode = generateUUID(); // Generate a new UUID-like string
+    setQRCode(newQRCode); // Set the new UUID-like string as the QR code
+    console.log('QR code set to', newQRCode);
+  };
+
   return (
     <div className='flex flex-col text-center items-center'>
       <div className='aspect-square w-[100vw] bg-slate-400 mb-2 max-w-xl' onClick={onClick}></div>

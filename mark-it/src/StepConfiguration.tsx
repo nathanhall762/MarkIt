@@ -4,12 +4,15 @@ import QRScannerViewport from './components/QRScannerViewport';
 import ActionTypeSelector from './components/ActionTypeSelector';
 import CameraDrawer from './components/CameraDrawer';
 import ItemPage from './components/ItemPage';
+import {
+  InputDrawerTitle,
+  InputDrawerDescription,
+} from './components/InputDrawer';
+import PriceSlider from './components/PriceSlider';
 // Import other components as needed
 
 // Import the Zustand store
 import useAddSequenceStore from './AddSequenceStore';
-import InputDrawer from './components/InputDrawer';
-import PriceSlider from './components/PriceSlider';
 
 // Define a type or interface for the components mapping if needed
 interface StepComponents {
@@ -17,18 +20,6 @@ interface StepComponents {
 }
 
 // Define the mapping
-const stepComponents: StepComponents = {
-  0: () => [<DropDownSelector />, <ItemCard actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />],
-  1: () => [<QRScannerViewport />, < DropDownSelector />],
-  2: () => [<ActionTypeSelector />],
-  3: () => [<ItemCard actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <CameraDrawer />],
-  4: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <CameraDrawer />],
-  5: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <CameraDrawer />],
-  6: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <InputDrawer dataName='Title' rows={2}/>],
-  7: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <InputDrawer dataName='Description' rows={4}/>],
-  8: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />, <PriceSlider instructions='Select acceptable price minimum and maximum.' min={0} max={500} step={5} />],
-  9: () => [<ItemPage actionType='Rent' imageSrc='https://photos.google.com/photo/AF1QipPARII2syIJfaZl_6iK8I0-MjcZLdHmS2qQt_pL' price={20} title='Digital Optical Audio Toslink Sound Bar TV Cable' />],
-};
 
 // Function to define rules for the app at each step. The function will conditionally set isCenterButtonEnabled to true depending on conditions met in state. i.e conditions: selectedCollection not Null -> highlight Add
 export const useStepRules = () => {
@@ -45,17 +36,30 @@ export const useStepRules = () => {
     (state) => state.isCenterButtonEnabled
   );
   const QRCode = useAddSequenceStore((state) => state.QRCode);
-  const setLeftButtonIcon = useAddSequenceStore((state) => state.setLeftButtonIcon);
+  const setLeftButtonIcon = useAddSequenceStore(
+    (state) => state.setLeftButtonIcon
+  );
   const dumpWorkingItem = useAddSequenceStore((state) => state.dumpWorkingItem);
   const actionType = useAddSequenceStore((state) => state.actionType);
-  const setCenterButtonIcon = useAddSequenceStore((state) => state.setCenterButtonIcon);
-  const photos = useAddSequenceStore((state) => state.photos);
-  const setPhotos = useAddSequenceStore((state) => state.setPhotos);
+  const setCenterButtonIcon = useAddSequenceStore(
+    (state) => state.setCenterButtonIcon
+  );
   const title = useAddSequenceStore((state) => state.title);
   const setTitle = useAddSequenceStore((state) => state.setTitle);
   const description = useAddSequenceStore((state) => state.description);
   const titlePreview = useAddSequenceStore((state) => state.titlePreview);
   const setTitlePreview = useAddSequenceStore((state) => state.setTitlePreview);
+  const photo1 = useAddSequenceStore((state) => state.photo1);
+  const setPhoto1 = useAddSequenceStore((state) => state.setPhoto1);
+  const photo2 = useAddSequenceStore((state) => state.photo2);
+  const setPhoto2 = useAddSequenceStore((state) => state.setPhoto2);
+  const photo3 = useAddSequenceStore((state) => state.photo3);
+  const setPhoto3 = useAddSequenceStore((state) => state.setPhoto3);
+  const descriptionPreview = useAddSequenceStore(
+    (state) => state.descriptionPreview
+  );
+  const setDescription = useAddSequenceStore((state) => state.setDescription);
+  const priceRange = useAddSequenceStore((state) => state.priceRange);
 
   // Define the rules for each step
   const stepRules: { [key: number]: () => void } = {
@@ -84,7 +88,7 @@ export const useStepRules = () => {
     },
     3: () => {
       setIsCenterButtonEnabled(true);
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 0) {
+      if (selectedCollection && QRCode !== '' && actionType && photo1) {
         setCenterButtonIcon('tabler:arrow-right');
         setIsCenterButtonEnabled(true);
       } else {
@@ -93,7 +97,13 @@ export const useStepRules = () => {
     },
     4: () => {
       setIsCenterButtonEnabled(true);
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 1) {
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2
+      ) {
         setCenterButtonIcon('tabler:arrow-right');
         setIsCenterButtonEnabled(true);
       } else {
@@ -102,7 +112,14 @@ export const useStepRules = () => {
     },
     5: () => {
       setIsCenterButtonEnabled(true);
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2) {
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2 &&
+        photo3
+      ) {
         setCenterButtonIcon('tabler:arrow-right');
         setIsCenterButtonEnabled(true);
       } else {
@@ -110,7 +127,15 @@ export const useStepRules = () => {
       }
     },
     6: () => {
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && titlePreview !== '') {
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2 &&
+        photo3 &&
+        titlePreview !== ''
+      ) {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);
@@ -118,14 +143,33 @@ export const useStepRules = () => {
     },
     7: () => {
       setTitle(titlePreview);
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2 &&
+        photo3 &&
+        title &&
+        descriptionPreview !== ''
+      ) {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);
       }
     },
     8: () => {
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
+      setDescription(descriptionPreview);
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2 &&
+        photo3 &&
+        title &&
+        description
+      ) {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);
@@ -133,13 +177,22 @@ export const useStepRules = () => {
     },
     9: () => {
       setCenterButtonIcon('ph:check-bold');
-      if (selectedCollection && QRCode !== '' && actionType && photos.length > 2 && title && description) {
+      if (
+        selectedCollection &&
+        QRCode !== '' &&
+        actionType &&
+        photo1 &&
+        photo2 &&
+        photo3 &&
+        title &&
+        description &&
+        priceRange.length > 0
+      ) {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);
       }
     },
-    
   };
 
   // Return the rules for the current step
@@ -149,6 +202,99 @@ export const useStepRules = () => {
 // Function to get components based on the current step
 export const useStepComponents = () => {
   const currentStep = useAddSequenceStore((state) => state.currentStep);
+  const actionType = useAddSequenceStore((state) => state.actionType);
+  const photo1 = useAddSequenceStore((state) => state.photo1);
+  const title = useAddSequenceStore((state) => state.title);
+  const description = useAddSequenceStore((state) => state.description);
+  const priceRange = useAddSequenceStore((state) => state.priceRange);
+
+  const stepComponents: StepComponents = {
+    // Steps 0 to 6 remain unchanged
+    0: () => [
+      <DropDownSelector />,
+      <ItemCard
+        actionType='Rent'
+        imageSrc='https://via.placeholder.com/150'
+        price={20}
+        title='Digital Optical Audio Toslink Sound Bar TV Cable'
+      />,
+    ],
+    1: () => [<QRScannerViewport />, <DropDownSelector />],
+    2: () => [<ActionTypeSelector />],
+    3: () => [
+      <ItemCard
+        actionType={actionType}
+        imageSrc={photo1}
+        price={20}
+        title={title}
+      />,
+      <CameraDrawer />,
+    ],
+    4: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+      <CameraDrawer />,
+    ],
+    5: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+      <CameraDrawer />,
+    ],
+    6: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+      <InputDrawerTitle rows={2} />,
+    ],
+    7: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+      <InputDrawerDescription rows={4} />,
+    ],
+    8: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+      <PriceSlider
+        instructions='Select acceptable price minimum and maximum.'
+        min={0}
+        max={500}
+        step={5}
+      />,
+    ],
+    9: () => [
+      <ItemPage
+        actionType={actionType}
+        imageSrc={photo1} // Keeping photo1 for the final display
+        price={priceRange[1]} // Final price from priceRange[1]
+        title={title}
+        description={description}
+      />,
+    ],
+  };
 
   // Return the components for the current step, or an empty array if no match
   return stepComponents[currentStep] ? stepComponents[currentStep]() : [];
