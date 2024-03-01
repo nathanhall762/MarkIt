@@ -3,7 +3,7 @@ import { useStepComponents, useStepRules } from '../StepConfiguration';
 import React, { useEffect } from 'react';
 import useAddSequenceStore from '../AddSequenceStore';
 
-const App: React.FC = () => {
+const MyApp: React.FC = () => {
   const stepComponents = useStepComponents();
   const currentStep = useAddSequenceStore((state) => state.currentStep);
   const stepRules = useStepRules();
@@ -28,4 +28,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default MyApp;

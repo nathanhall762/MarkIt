@@ -32,9 +32,6 @@ export const useStepRules = () => {
   const setIsCenterButtonEnabled = useAddSequenceStore(
     (state) => state.setIsCenterButtonEnabled
   );
-  const isCenterButtonEnabled = useAddSequenceStore(
-    (state) => state.isCenterButtonEnabled
-  );
   const QRCode = useAddSequenceStore((state) => state.QRCode);
   const setLeftButtonIcon = useAddSequenceStore(
     (state) => state.setLeftButtonIcon
@@ -48,13 +45,9 @@ export const useStepRules = () => {
   const setTitle = useAddSequenceStore((state) => state.setTitle);
   const description = useAddSequenceStore((state) => state.description);
   const titlePreview = useAddSequenceStore((state) => state.titlePreview);
-  const setTitlePreview = useAddSequenceStore((state) => state.setTitlePreview);
   const photo1 = useAddSequenceStore((state) => state.photo1);
-  const setPhoto1 = useAddSequenceStore((state) => state.setPhoto1);
   const photo2 = useAddSequenceStore((state) => state.photo2);
-  const setPhoto2 = useAddSequenceStore((state) => state.setPhoto2);
   const photo3 = useAddSequenceStore((state) => state.photo3);
-  const setPhoto3 = useAddSequenceStore((state) => state.setPhoto3);
   const descriptionPreview = useAddSequenceStore(
     (state) => state.descriptionPreview
   );
