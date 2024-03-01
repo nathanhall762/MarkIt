@@ -13,16 +13,32 @@ const ActionTypeSelector = () => {
     }
   };
 
-  const getButtonClass = (buttonActionType: string) => 
-    `border border-black p-2 rounded-full ${actionType === buttonActionType ? 'bg-green-500' : ''}`;
+  const getButtonClass = (buttonActionType: string) =>
+    `border p-2 rounded-full ${
+      actionType === buttonActionType
+        ? 'bg-green-500'
+        : 'bg-ltbg2 dark:bg-dkbg2'
+    }`;
 
   return (
-    <div className='flex flex-col gap-1 w-full text-center p-8'>
+    <div className='flex flex-col gap-1 w-full text-center p-8 '>
       <h3>Mark this item as:</h3>
-      <div className='flex flex-col justify-evenly gap-3'>
-        <button className={getButtonClass('store')} onClick={onClick}>Store</button>
-        <button className={getButtonClass('rent')} onClick={onClick}>Rent</button>
-        <button className={getButtonClass('sell')} onClick={onClick}>Sell</button>
+      <div className='flex flex-col justify-evenly gap-3 '>
+        <button
+          className={getButtonClass('store')}
+          onClick={onClick}>
+          Store
+        </button>
+        <button
+          className={getButtonClass('rent')}
+          onClick={onClick}>
+          Rent
+        </button>
+        <button
+          className={getButtonClass('sell')}
+          onClick={onClick}>
+          Sell
+        </button>
       </div>
     </div>
   );

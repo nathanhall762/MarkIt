@@ -23,6 +23,7 @@
     "zustand": "^4.5.1"
   },
   "devDependencies": {
+    "@iconify/icons-mdi": "^1.2.48",
     "@iconify/react": "^4.1.1"
   }
 }

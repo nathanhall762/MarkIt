@@ -1,11 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import App from '../components/App.tsx';
+import LayoutWebsite from '../layouts/LayoutWebsite.astro';
+import Hero from '../components/Hero';
+import AboutCard from '../components/AboutCard';
+
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<App client:load/>
-	</main>
-</Layout>
-
+<LayoutWebsite title='MarkIt Storage' metaDescription='MarkItStorage Homepage'>
+  <main>
+    <Hero
+      welcomeText='Welcome text'
+      tagline='Tagline. Be mindful about what hero images you use.'
+      backgroundImages={['https://placehold.co/300x800']}
+      slideTime={5000}
+      client:load
+    />
+    <AboutCard
+      aboutTitle='About Title Text'
+      aboutBody='This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long. This is the body of the about card. It can be as long as you want it to be. It will wrap to the next line if it is too long.'
+      linkText='See our work'
+      linkUrl='/commercials'
+    />
+  </main>
+</LayoutWebsite>

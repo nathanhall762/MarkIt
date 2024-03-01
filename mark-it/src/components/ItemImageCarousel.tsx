@@ -10,10 +10,10 @@ const ItemImageCarousel: React.FC<ItemProps> = ({ imageSrc, title }) => {
         />
       </div>
       <div className='flex justify-center'>
-        <div className='w-4 h-4 bg-gray-500 border border-black rounded-full mx-0.5'></div>
-        <div className='w-4 h-4 bg-gray-500 border border-black bg-transparent rounded-full mx-0.5'></div>
-        <div className='w-4 h-4 bg-gray-500 border border-black bg-transparent rounded-full mx-0.5'></div>
-        <div className='w-4 h-4 bg-gray-500 border border-black bg-transparent rounded-full mx-0.5'></div>
+        <div className='w-4 h-4 bg-dkbg2 dark:bg-ltbg2 border rounded-full mx-0.5'></div>
+        <div className='w-4 h-4 bg-dkbg2 dark:bg-ltbg2 border bg-transparent dark:bg-transparent rounded-full mx-0.5'></div>
+        <div className='w-4 h-4 bg-dkbg2 dark:bg-ltbg2 border bg-transparent dark:bg-transparent rounded-full mx-0.5'></div>
+        <div className='w-4 h-4 bg-dkbg2 dark:bg-ltbg2 border bg-transparent dark:bg-transparent rounded-full mx-0.5'></div>
       </div>
     </div>
   );

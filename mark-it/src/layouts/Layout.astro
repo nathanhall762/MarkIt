@@ -1,34 +1,51 @@
 ---
+import Header from '../components/Header';
+
 interface Props {
   title: string;
+  metaDescription: string;
 }
 
-const { title } = Astro.props;
+const { title, metaDescription } = Astro.props;
+
+const websiteName = 'MarkItStorage';
+const navs = [
+  { link: '/about', name: 'About' },
+];
+const cta = 'Start Marking!';
 ---
 
 <!doctype html>
-<html lang='en'>
+<html lang='en' class='bg-black font-sans font-light text-white'>
   <head>
     <meta charset='UTF-8' />
-    <meta
-      name='description'
-      content='Astro description'
-    />
-    <meta
-      name='viewport'
-      content='width=device-width'
-    />
-    <link
-      rel='icon'
-      type='image/svg+xml'
-      href='/favicon.svg'
-    />
-    <meta
-      name='generator'
-      content={Astro.generator}
-    />
-    <title>{title}</title>
+    <meta name='description' content={metaDescription} />
+    <meta name='viewport' content='width=device-width' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
+    <script>
+      if (
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+      localStorage.theme = 'light';
+      localStorage.theme = 'dark';
+      localStorage.removeItem('theme');
+    </script>
+    <title>{title ? `${title} - ${websiteName}` : websiteName}</title>
   </head>
+  <body class="bg-ltbg2 dark:bg-dkbg2">
+    <Header
+      title={websiteName}
+      navs={navs.filter((nav) => nav.link !== '/')}
+      cta={cta}
+      client:load
+    />
   <body>
     <slot />
   </body>
@@ -53,6 +70,9 @@ const { title } = Astro.props;
     background: #13151a;
     background-size: 224px;
   }
+  textarea {
+    color: black;
+  }
   code {
     font-family:
       Menlo,
@@ -64,4 +84,9 @@ const { title } = Astro.props;
       Courier New,
       monospace;
   }
+  @layer base {
+  body {
+    @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1; /* Light and dark text colors */
+  }
+}
 </style>

@@ -13,7 +13,7 @@ const ItemCard: React.FC<ItemProps> = ({
   actionType,
 }) => {
   return (
-    <div className='flex flex-col h-fit w-[90vw] max-w-[70vh] max-h-[70vh] rounded-3xl text-center justify-stretch border border-black'>
+    <div className='flex flex-col h-fit w-[90vw] max-w-[70vh] max-h-[70vh] rounded-3xl text-center justify-stretch border'>
       <div className='w-full h-[90vw] rounded-t-3xl flex items-center'>
         <img
         className="w-full h-full object-cover rounded-t-3xl"
