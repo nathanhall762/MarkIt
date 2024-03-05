@@ -12,6 +12,7 @@ export default function Nav() {
           icon='charm:menu-hamburger'
           height={46}
           width={52}
+          className='dark:text-black text-white'
         />
       </button>
     </div>

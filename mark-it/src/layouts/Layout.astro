@@ -46,9 +46,7 @@ const cta = 'Start Marking!';
       cta={cta}
       client:load
     />
-  <body>
     <slot />
-  </body>
 </html>
 <style is:global>
   @tailwind base;
@@ -86,6 +84,9 @@ const cta = 'Start Marking!';
   }
   @layer base {
   body {
+    @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1 h-screen; /* Light and dark text colors */
+  }
+  input {
     @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1; /* Light and dark text colors */
   }
 }

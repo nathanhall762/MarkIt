@@ -1,4 +1,30 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export interface User {
+  uid: string;
+  email: string | null;
+}
+
+interface AuthState {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null, // Default state
+      setUser: (user) => set({ user }),
+      logout: () => set({ user: null }),
+    }),
+    {
+      name: 'auth-storage-local',
+    }
+  )
+);
+
 
 interface AddSequenceState {
   currentStep: number;

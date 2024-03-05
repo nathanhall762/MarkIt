@@ -9,10 +9,11 @@ import {
   InputDrawerDescription,
 } from './components/InputDrawer';
 import PriceSlider from './components/PriceSlider';
+import Login from './components/Login';
 // Import other components as needed
 
 // Import the Zustand store
-import useAddSequenceStore from './AddSequenceStore';
+import useAddSequenceStore, {useAuthStore} from './AddSequenceStore';
 
 // Define a type or interface for the components mapping if needed
 interface StepComponents {
@@ -103,46 +104,46 @@ export const useStepRules = () => {
         setCenterButtonIcon('tabler:camera');
       }
     },
+    // 5: () => {
+    //   setIsCenterButtonEnabled(true);
+    //   if (
+    //     selectedCollection &&
+    //     QRCode !== '' &&
+    //     actionType &&
+    //     photo1 &&
+    //     photo2 &&
+    //     photo3
+    //   ) {
+    //     setCenterButtonIcon('tabler:arrow-right');
+    //     setIsCenterButtonEnabled(true);
+    //   } else {
+    //     setCenterButtonIcon('tabler:camera');
+    //   }
+    // },
+    // 6: () => {
+    //   if (
+    //     selectedCollection &&
+    //     QRCode !== '' &&
+    //     actionType &&
+    //     photo1 &&
+    //     photo2 &&
+    //     photo3 &&
+    //     titlePreview !== ''
+    //   ) {
+    //     setIsCenterButtonEnabled(true);
+    //   } else {
+    //     setIsCenterButtonEnabled(false);
+    //   }
+    // },
     5: () => {
-      setIsCenterButtonEnabled(true);
-      if (
-        selectedCollection &&
-        QRCode !== '' &&
-        actionType &&
-        photo1 &&
-        photo2 &&
-        photo3
-      ) {
-        setCenterButtonIcon('tabler:arrow-right');
-        setIsCenterButtonEnabled(true);
-      } else {
-        setCenterButtonIcon('tabler:camera');
-      }
-    },
-    6: () => {
-      if (
-        selectedCollection &&
-        QRCode !== '' &&
-        actionType &&
-        photo1 &&
-        photo2 &&
-        photo3 &&
-        titlePreview !== ''
-      ) {
-        setIsCenterButtonEnabled(true);
-      } else {
-        setIsCenterButtonEnabled(false);
-      }
-    },
-    7: () => {
       setTitle(titlePreview);
       if (
         selectedCollection &&
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        photo2 &&
-        photo3 &&
+        // photo2 &&
+        // photo3 &&
         title &&
         descriptionPreview !== ''
       ) {
@@ -151,15 +152,15 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    8: () => {
+    6: () => {
       setDescription(descriptionPreview);
       if (
         selectedCollection &&
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        photo2 &&
-        photo3 &&
+        // photo2 &&
+        // photo3 &&
         title &&
         description
       ) {
@@ -168,15 +169,15 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    9: () => {
+    7: () => {
       setCenterButtonIcon('ph:check-bold');
       if (
         selectedCollection &&
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        photo2 &&
-        photo3 &&
+        // photo2 &&
+        // photo3 &&
         title &&
         description &&
         priceRange.length > 0
@@ -200,10 +201,10 @@ export const useStepComponents = () => {
   const title = useAddSequenceStore((state) => state.title);
   const description = useAddSequenceStore((state) => state.description);
   const priceRange = useAddSequenceStore((state) => state.priceRange);
+  const user = useAuthStore((state) => state.user);
 
   const stepComponents: StepComponents = {
-    // Steps 0 to 6 remain unchanged
-    0: () => [
+    0: () => user && user.uid === '45GunbHNtcZTq0X3GOpQEXXbIw43' ? [
       <DropDownSelector />,
       <ItemCard
         actionType='Rent'
@@ -211,7 +212,7 @@ export const useStepComponents = () => {
         price={20}
         title='Digital Optical Audio Toslink Sound Bar TV Cable'
       />,
-    ],
+    ] : [<Login />],
     1: () => [<QRScannerViewport />, <DropDownSelector />],
     2: () => [<ActionTypeSelector />],
     3: () => [
@@ -223,27 +224,27 @@ export const useStepComponents = () => {
       />,
       <CameraDrawer />,
     ],
+    // 4: () => [
+    //   <ItemPage
+    //     actionType={actionType}
+    //     imageSrc={photo1} // Keeping photo1 for the final display
+    //     price={priceRange[1]} // Final price from priceRange[1]
+    //     title={title}
+    //     description={description}
+    //   />,
+    //   <CameraDrawer />,
+    // ],
+    // 5: () => [
+    //   <ItemPage
+    //     actionType={actionType}
+    //     imageSrc={photo1} // Keeping photo1 for the final display
+    //     price={priceRange[1]} // Final price from priceRange[1]
+    //     title={title}
+    //     description={description}
+    //   />,
+    //   <CameraDrawer />,
+    // ],
     4: () => [
-      <ItemPage
-        actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
-        title={title}
-        description={description}
-      />,
-      <CameraDrawer />,
-    ],
-    5: () => [
-      <ItemPage
-        actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
-        title={title}
-        description={description}
-      />,
-      <CameraDrawer />,
-    ],
-    6: () => [
       <ItemPage
         actionType={actionType}
         imageSrc={photo1} // Keeping photo1 for the final display
@@ -253,7 +254,7 @@ export const useStepComponents = () => {
       />,
       <InputDrawerTitle rows={2} />,
     ],
-    7: () => [
+    5: () => [
       <ItemPage
         actionType={actionType}
         imageSrc={photo1} // Keeping photo1 for the final display
@@ -263,7 +264,7 @@ export const useStepComponents = () => {
       />,
       <InputDrawerDescription rows={4} />,
     ],
-    8: () => [
+    6: () => [
       <ItemPage
         actionType={actionType}
         imageSrc={photo1} // Keeping photo1 for the final display
@@ -278,7 +279,7 @@ export const useStepComponents = () => {
         step={5}
       />,
     ],
-    9: () => [
+    7: () => [
       <ItemPage
         actionType={actionType}
         imageSrc={photo1} // Keeping photo1 for the final display
