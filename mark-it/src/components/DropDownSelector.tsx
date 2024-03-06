@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 import { Icon } from '@iconify/react';
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 
 const DropdownSelector = () => {
-  const setSelectedCollection = useAddSequenceStore((state) => state.setSelectedCollection);
-  const selectedCollection = useAddSequenceStore((state) => state.selectedCollection);
+  const setSelectedCollection = useAddSequenceStore(
+    (state) => state.setSelectedCollection
+  );
+  const selectedCollection = useAddSequenceStore(
+    (state) => state.selectedCollection
+  );
 
   useEffect(() => {
     setSelectedCollection(selectedCollection);

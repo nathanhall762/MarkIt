@@ -1,4 +1,4 @@
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 
 const ActionTypeSelector = () => {
   const { actionType, setActionType } = useAddSequenceStore((state) => ({

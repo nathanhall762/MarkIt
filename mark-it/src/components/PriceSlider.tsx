@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 
 interface PriceSliderProps {
   min: number;
@@ -35,7 +35,6 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
     );
     setUpperValue(newValue);
     setPriceRange([lowerValue, newValue]);
-
   };
 
   return (

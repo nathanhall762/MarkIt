@@ -1,8 +1,8 @@
 import { firebaseApp } from '../firebase';
 import { useEffect, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
-import { useAuthStore } from '../AddSequenceStore';
-import type { User } from '../AddSequenceStore';
+import { useAuthStore } from '../ZustandStore';
+import type { User } from '../ZustandStore';
 
 interface LoginData {
   email: string;
@@ -52,7 +52,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
       }
       console.log(err);
     });
-    
+
     if (userCredential && userCredential.user) {
       // Construct the User object expected by setUser
       const userData: User = {

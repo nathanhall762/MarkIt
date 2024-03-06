@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 import useWorkingItemSubmit from '../WorkingItemSubmit';
 
 export default function NavButton(): React.ReactElement {

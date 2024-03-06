@@ -13,7 +13,8 @@ import Login from './components/Login';
 // Import other components as needed
 
 // Import the Zustand store
-import useAddSequenceStore, {useAuthStore} from './AddSequenceStore';
+import useAddSequenceStore, { useAuthStore } from './ZustandStore';
+import CardList from './components/CardList';
 
 // Define a type or interface for the components mapping if needed
 interface StepComponents {
@@ -60,7 +61,7 @@ export const useStepRules = () => {
     0: () => {
       dumpWorkingItem();
       setCenterButtonIcon('tabler:plus');
-      setSelectedCollection('My Storage Unit');
+      setSelectedCollection('gXIrbv0AV0eQfaRKYGun');
       setIsCenterButtonEnabled(true);
       setLeftButtonIcon('material-symbols:search');
     },
@@ -202,24 +203,30 @@ export const useStepComponents = () => {
   const description = useAddSequenceStore((state) => state.description);
   const priceRange = useAddSequenceStore((state) => state.priceRange);
   const user = useAuthStore((state) => state.user);
+  const QRCode = useAddSequenceStore((state) => state.QRCode);
+  const selectedCollection = useAddSequenceStore(
+    (state) => state.selectedCollection
+  );
 
   const stepComponents: StepComponents = {
-    0: () => user && user.uid === '45GunbHNtcZTq0X3GOpQEXXbIw43' ? [
-      <DropDownSelector />,
-      <ItemCard
-        actionType='Rent'
-        imageSrc='https://via.placeholder.com/150'
-        price={20}
-        title='Digital Optical Audio Toslink Sound Bar TV Cable'
-      />,
-    ] : [<Login />],
+    0: () =>
+      user && user.uid === '45GunbHNtcZTq0X3GOpQEXXbIw43'
+        ? [
+            <DropDownSelector />,
+            <CardList
+              userId={user.uid}
+              collectionId={selectedCollection}
+            />,
+          ]
+        : [<Login />],
     1: () => [<QRScannerViewport />, <DropDownSelector />],
     2: () => [<ActionTypeSelector />],
     3: () => [
       <ItemCard
+        id={QRCode}
         actionType={actionType}
-        imageSrc={photo1}
-        price={20}
+        photos={[photo1]}
+        priceRange={20}
         title={title}
       />,
       <CameraDrawer />,

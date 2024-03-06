@@ -1,4 +1,4 @@
-import useAddSequenceStore from './AddSequenceStore';
+import useAddSequenceStore from './ZustandStore';
 
 const useWorkingItemSubmit = () => {
   const QRCode = useAddSequenceStore((state) => state.QRCode);
@@ -14,9 +14,9 @@ const useWorkingItemSubmit = () => {
   const priceRange = useAddSequenceStore((state) => state.priceRange);
 
   const submit = () => {
-	console.log(
-	  `QRCode: ${QRCode}, selectedCollection: ${selectedCollection}, actionType: ${actionType}, photo1: ${photo1}, photo2: ${photo2}, photo3: ${photo3}, title: ${title}, description: ${description}, priceRange: ${priceRange}`
-	);
+    console.log(
+      `QRCode: ${QRCode}, selectedCollection: ${selectedCollection}, actionType: ${actionType}, photo1: ${photo1}, photo2: ${photo2}, photo3: ${photo3}, title: ${title}, description: ${description}, priceRange: ${priceRange}`
+    );
   };
   return submit;
 };

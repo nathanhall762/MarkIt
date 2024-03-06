@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 
 export const InputDrawerTitle: React.FC<{ rows: number }> = ({ rows }) => {
   const { currentStep, titlePreview, setTitlePreview, setTitle } =

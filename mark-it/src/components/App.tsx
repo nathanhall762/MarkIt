@@ -1,13 +1,12 @@
 import Nav from './Nav';
 import { useStepComponents, useStepRules } from '../StepConfiguration';
 import React, { useEffect } from 'react';
-import useAddSequenceStore from '../AddSequenceStore';
+import useAddSequenceStore from '../ZustandStore';
 
 const MyApp: React.FC = () => {
   const stepComponents = useStepComponents();
   const currentStep = useAddSequenceStore((state) => state.currentStep);
   const stepRules = useStepRules();
-
 
   useEffect(() => {
     const ruleForCurrentStep = stepRules[currentStep];
