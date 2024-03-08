@@ -1,7 +1,10 @@
 import React, { useRef } from 'react';
 import { Icon } from '@iconify/react';
-import useAddSequenceStore from '../ZustandStore';
+import useAddSequenceStore, {useAuthStore} from '../ZustandStore';
 import useWorkingItemSubmit from '../WorkingItemSubmit';
+import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from '../firebase';
+
 
 export default function NavButton(): React.ReactElement {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -13,15 +16,31 @@ export default function NavButton(): React.ReactElement {
   const iconColor = isCenterButtonEnabled ? 'green' : 'gray';
   const submitWorkingItem = useWorkingItemSubmit();
   const setPhoto1 = useAddSequenceStore((state) => state.setPhoto1);
+  const user = useAuthStore((state) => state.user);
+  const QRCode = useAddSequenceStore((state) => state.QRCode);
 
-  const handleCapture = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCapture = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Here, handle the file, e.g., by uploading it or converting it to a base64 string
-      console.log('Captured file:', file);
-      setPhoto1(URL.createObjectURL(file));
-
-      
+      // Here, upload the file to firebase storage and setPhoto1 to the URL
+      try {
+        // Create a storage reference
+        const fileRef = storageRef(storage, `${user?.uid}/${QRCode}`);
+  
+        // Upload the file
+        const snapshot = await uploadBytes(fileRef, file);
+  
+        // After upload completes, get the download URL
+        const downloadURL = await getDownloadURL(snapshot.ref);
+  
+        console.log("File available at", downloadURL);
+        // Now you can use downloadURL for displaying the image or storing it in Firestore
+        setPhoto1(downloadURL);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+        // Handle the error appropriately in your app
+        // For example, you could show a user-friendly error message
+      }
     }
   };
 

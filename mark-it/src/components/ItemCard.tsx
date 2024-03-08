@@ -9,9 +9,9 @@ const ItemCard: React.FC<Item> = ({
 }) => {
   return (
     <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border">
-      <div className="w-full aspect-square rounded-t-3xl flex items-center">
+      <div className="w-full rounded-t-3xl">
         <img
-          className="w-full h-full object-cover rounded-t-3xl"
+          className="w-full aspect-square object-cover rounded-t-3xl"
           src={photos[0]}
           alt={title}
         />

@@ -10,7 +10,7 @@ const ItemPage: React.FC<Item> = ({
 }) => {
   const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
   return (
-    <div className='flex relative flex-col w-[90vw] text-center justify-start h-full md:w-full md:box-border md:px-4 py-4'>
+    <div className='flex relative flex-col w-[90vw] text-center justify-start h-full max-w-lg py-4'>
       <div className='py-2 border mb-4'>{title}</div>
       <ItemImageCarousel
         photos={photos}

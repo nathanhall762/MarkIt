@@ -55,6 +55,7 @@ export const useStepRules = () => {
   );
   const setDescription = useAddSequenceStore((state) => state.setDescription);
   const priceRange = useAddSequenceStore((state) => state.priceRange);
+  const user = useAuthStore((state) => state.user);
 
   // Define the rules for each step
   const stepRules: { [key: number]: () => void } = {
@@ -63,8 +64,11 @@ export const useStepRules = () => {
       setCenterButtonIcon('tabler:plus');
       console.log('selectedCollection', selectedCollection);
       setSelectedCollection(selectedCollection);
-      setIsCenterButtonEnabled(true);
       setLeftButtonIcon('material-symbols:search');
+      setIsCenterButtonEnabled(false);
+      if (user && user.uid) {
+        setIsCenterButtonEnabled(true);
+      }
     },
     1: () => {
       setLeftButtonIcon('ep:back');
@@ -212,12 +216,7 @@ export const useStepComponents = () => {
   const stepComponents: StepComponents = {
     0: () =>
       user && user.uid === '45GunbHNtcZTq0X3GOpQEXXbIw43'
-        ? [
-            <DropDownSelector />,
-            <CardList
-              userId={user.uid}
-            />,
-          ]
+        ? [<DropDownSelector />, <CardList userId={user.uid} />]
         : [<Login />],
     1: () => [<QRScannerViewport />, <DropDownSelector />],
     2: () => [<ActionTypeSelector />],

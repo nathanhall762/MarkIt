@@ -10,6 +10,7 @@ const ItemImageCarousel: React.FC<ItemImageCarouselProps> = ({ photos, title }) 
     <div className='flex items-center flex-col mb-4'>
       <div className='aspect-square bg-slate-100 mb-2'>
         <img
+          className='w-full h-full object-cover aspect-square'
           src={photos[0]}
           alt={title}
         />
