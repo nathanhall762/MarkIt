@@ -5,11 +5,11 @@ const QRScannerViewport = () => {
 
   // Function to generate a simple UUID-like string
   const generateUUID = () => {
-    const s4 = () =>
-      Math.floor((1 + Math.random()) * 0x10000)
+    const s6 = () =>
+      Math.floor((1 + Math.random()) * 0x1000000)
         .toString(16)
         .substring(1);
-    return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
+    return `${s6()}`;
   };
 
   const onClick = () => {
@@ -21,7 +21,7 @@ const QRScannerViewport = () => {
   return (
     <div className='flex flex-col text-center items-center'>
       <div
-        className='aspect-square w-[100vw] bg-ltbg2 dark:bg-dkbg2 mb-2 max-w-xl'
+        className='aspect-square w-[100vw] bg-ltbg1 dark:bg-dkbg1 mb-2 max-w-md'
         onClick={onClick}></div>
       <p>Scan a barcode or MarkIt sticker to begin.</p>
     </div>

@@ -61,7 +61,8 @@ export const useStepRules = () => {
     0: () => {
       dumpWorkingItem();
       setCenterButtonIcon('tabler:plus');
-      setSelectedCollection('gXIrbv0AV0eQfaRKYGun');
+      console.log('selectedCollection', selectedCollection);
+      setSelectedCollection(selectedCollection);
       setIsCenterButtonEnabled(true);
       setLeftButtonIcon('material-symbols:search');
     },
@@ -96,8 +97,8 @@ export const useStepRules = () => {
         selectedCollection &&
         QRCode !== '' &&
         actionType &&
-        photo1 &&
-        photo2
+        photo1
+        // photo2
       ) {
         setCenterButtonIcon('tabler:arrow-right');
         setIsCenterButtonEnabled(true);
@@ -215,7 +216,6 @@ export const useStepComponents = () => {
             <DropDownSelector />,
             <CardList
               userId={user.uid}
-              collectionId={selectedCollection}
             />,
           ]
         : [<Login />],
@@ -254,30 +254,33 @@ export const useStepComponents = () => {
     4: () => [
       <ItemPage
         actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
+        photos={[photo1]} // Keeping photo1 for the final display
+        priceRange={priceRange[1]} // Final price from priceRange[1]
         title={title}
         description={description}
+        id={QRCode}
       />,
       <InputDrawerTitle rows={2} />,
     ],
     5: () => [
       <ItemPage
         actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
+        photos={[photo1]} // Keeping photo1 for the final display
+        priceRange={priceRange[1]} // Final price from priceRange[1]
         title={title}
         description={description}
+        id={QRCode}
       />,
       <InputDrawerDescription rows={4} />,
     ],
     6: () => [
       <ItemPage
         actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
+        photos={[photo1]} // Keeping photo1 for the final display
+        priceRange={priceRange[1]} // Final price from priceRange[1]
         title={title}
         description={description}
+        id={QRCode}
       />,
       <PriceSlider
         instructions='Select acceptable price minimum and maximum.'
@@ -289,10 +292,11 @@ export const useStepComponents = () => {
     7: () => [
       <ItemPage
         actionType={actionType}
-        imageSrc={photo1} // Keeping photo1 for the final display
-        price={priceRange[1]} // Final price from priceRange[1]
+        photos={[photo1]} // Keeping photo1 for the final display
+        priceRange={priceRange[1]} // Final price from priceRange[1]
         title={title}
         description={description}
+        id={QRCode}
       />,
     ],
   };

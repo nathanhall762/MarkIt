@@ -1,11 +1,16 @@
-import type { ItemProps } from './ItemCard';
+import type { Item } from "./CardList";
 
-const ItemImageCarousel: React.FC<ItemProps> = ({ imageSrc, title }) => {
+interface ItemImageCarouselProps {
+  photos: string[];
+  title: string;
+}
+
+const ItemImageCarousel: React.FC<ItemImageCarouselProps> = ({ photos, title }) => {
   return (
     <div className='flex items-center flex-col mb-4'>
       <div className='aspect-square bg-slate-100 mb-2'>
         <img
-          src={imageSrc}
+          src={photos[0]}
           alt={title}
         />
       </div>

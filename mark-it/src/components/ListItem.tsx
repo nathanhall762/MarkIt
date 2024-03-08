@@ -10,15 +10,15 @@ const ListItem: React.FC<Item> = ({
   description,
 }) => {
   return (
-    <div className="flex items-center justify-between p-4 border-b">
-      <img src={photos[0]} alt={title} className="w-20 h-20 object-cover mr-4" /> {/* Thumbnail */}
-      <div className="flex-grow">
-        <h5 className="text-lg font-bold">{title}</h5>
-        <p>{description}</p>
+    <div className="flex w-full items-center justify-between p-4 border-b h-32">
+      <img src={photos[0]} alt={title} className="w-20 h-20 object-cover mr-4" />
+      <div className="flex-grow overflow-hidden">
+        <h5 className="text-lg font-bold truncate">{title}</h5>
+        <p className="text-ellipsis overflow-hidden line-clamp-2">{description}</p>
       </div>
-      <div className="text-right">
-        <div className="text-sm">{actionType.toUpperCase()}</div>
-        <div className="font-bold">
+      <div className="text-right pl-2">
+        <div className="text-sm uppercase">{actionType}</div>
+        <div className="font-bold whitespace-nowrap">
           ${typeof priceRange === 'number' ? priceRange : `${priceRange.min}-${priceRange.max}`}
         </div>
       </div>

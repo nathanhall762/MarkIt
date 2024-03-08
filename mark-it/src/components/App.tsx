@@ -16,8 +16,8 @@ const MyApp: React.FC = () => {
   }, [currentStep, stepRules]);
 
   return (
-    <div className='mx-auto max-w-3xl bg-ltbg1 dark:bg-dkbg1 relative top-[7.5vh]'>
-      <div className='h-[80.5vh] flex items-center flex-col justify-evenly overflow-scroll md:overflow-auto'>
+    <div className='mx-auto bg-ltbg1 dark:bg-dkbg2 relative top-[7.5vh] box-border'>
+      <div className='mb-[12vh] pt-[4vh] pb-[16vh] min-h-[80.5vh] flex items-center flex-col justify-evenly overflow-scroll'>
         {stepComponents.map((Component, index) => (
           <React.Fragment key={index}>{Component}</React.Fragment>
         ))}

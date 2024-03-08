@@ -58,6 +58,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
       const userData: User = {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
+        username: userCredential.user.displayName,
       };
       setSigningIn(true);
       setUser(userData); // Pass the User object to setUser

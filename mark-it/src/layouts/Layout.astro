@@ -9,20 +9,33 @@ interface Props {
 const { title, metaDescription } = Astro.props;
 
 const websiteName = 'MarkItStorage';
-const navs = [
-  { link: '/about', name: 'About' },
-];
+const navs = [{ link: '/about', name: 'About' }];
 const cta = 'Start Marking!';
 ---
 
 <!doctype html>
-<html lang='en' class='bg-black font-sans font-light text-white'>
+<html
+  lang='en'
+  class='bg-black font-sans font-light text-white'>
   <head>
     <meta charset='UTF-8' />
-    <meta name='description' content={metaDescription} />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <meta name='generator' content={Astro.generator} />
+    <meta
+      name='description'
+      content={metaDescription}
+    />
+    <meta
+      name='viewport'
+      content='width=device-width'
+    />
+    <link
+      rel='icon'
+      type='image/svg+xml'
+      href='/favicon.svg'
+    />
+    <meta
+      name='generator'
+      content={Astro.generator}
+    />
     <script>
       if (
         localStorage.theme === 'dark' ||
@@ -39,7 +52,7 @@ const cta = 'Start Marking!';
     </script>
     <title>{title ? `${title} - ${websiteName}` : websiteName}</title>
   </head>
-  <body class="bg-ltbg2 dark:bg-dkbg2">
+  <body class='bg-ltbg2 dark:bg-dkbg2'>
     <Header
       title={websiteName}
       navs={navs.filter((nav) => nav.link !== '/')}
@@ -47,47 +60,52 @@ const cta = 'Start Marking!';
       client:load
     />
     <slot />
+  </body>
+  <style is:global>
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
+    :root {
+      --accent: 136, 58, 234;
+      --accent-light: 224, 204, 250;
+      --accent-dark: 49, 10, 101;
+      --accent-gradient: linear-gradient(
+        45deg,
+        rgb(var(--accent)),
+        rgb(var(--accent-light)) 30%,
+        white 60%
+      );
+    }
+    html {
+      font-family: system-ui, sans-serif;
+      background: #13151a;
+      background-size: 224px;
+    }
+    textarea {
+      color: black;
+    }
+    code {
+      font-family:
+        Menlo,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 12px; /* Width of the scrollbar */
+      height: 12px; /* Height of the scrollbar */
+    }
+    @layer base {
+      body {
+        @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1 h-screen; /* Light and dark text colors */
+      }
+      input {
+        @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1; /* Light and dark text colors */
+      }
+    }
+  </style>
 </html>
-<style is:global>
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  :root {
-    --accent: 136, 58, 234;
-    --accent-light: 224, 204, 250;
-    --accent-dark: 49, 10, 101;
-    --accent-gradient: linear-gradient(
-      45deg,
-      rgb(var(--accent)),
-      rgb(var(--accent-light)) 30%,
-      white 60%
-    );
-  }
-  html {
-    font-family: system-ui, sans-serif;
-    background: #13151a;
-    background-size: 224px;
-  }
-  textarea {
-    color: black;
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-  @layer base {
-  body {
-    @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1 h-screen; /* Light and dark text colors */
-  }
-  input {
-    @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1; /* Light and dark text colors */
-  }
-}
-</style>

@@ -38,7 +38,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
   };
 
   return (
-    <div className='h-fit w-screen mx-auto max-w-3xl rounded-t-3xl text-center bg-ltbg2 dark:bg-dkbg2 absolute bottom-[12vh] py-8 border-t'>
+    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-ltbg1 dark:bg-dkbg1 fixed bottom-[12vh] py-8 border-t flex flex-col'>
       <h2 className='mb-2 px-4'>{dataName}</h2>
       <div style={{ padding: '20px' }}>
         <input

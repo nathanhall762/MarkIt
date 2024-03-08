@@ -31,7 +31,7 @@ export const InputDrawerTitle: React.FC<{ rows: number }> = ({ rows }) => {
   }, [currentStep, titlePreview, setTitle]);
 
   return (
-    <div className='h-fit w-screen mx-auto max-w-3xl rounded-t-3xl text-center bg-ltbg2 dark:bg-dkbg2 absolute bottom-[12vh] py-8 border-t flex flex-col'>
+    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-ltbg1 dark:bg-dkbg1 fixed bottom-[12vh] py-8 border-t flex flex-col'>
       <h2 className='mb-2'>Enter Title</h2>
       <textarea
         name='title'
@@ -82,7 +82,7 @@ export const InputDrawerDescription: React.FC<{ rows: number }> = ({
   }, [currentStep, descriptionPreview, setDescription]);
 
   return (
-    <div className='h-fit w-screen mx-auto max-w-3xl rounded-t-3xl text-center bg-ltbg2 dark:bg-dkbg2 absolute bottom-[12vh] py-8 border-t flex flex-col'>
+    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-ltbg1 dark:bg-dkbg1 fixed bottom-[12vh] py-8 border-t flex flex-col'>
       <h2 className='mb-2'>Enter Description</h2>
       <textarea
         name='description'

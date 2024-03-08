@@ -80,9 +80,9 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
           </a>
         </nav>
       </div>
-      <div className='hidden lg:col-span-1 lg:block'>
+      <div className='hidden lg:col-span-1 lg:flex justify-center items-center align-middle'>
         <a href='/app' className=''>
-          <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
+          <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg  transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
             Log In
           </button>
         </a>

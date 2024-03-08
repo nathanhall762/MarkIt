@@ -1,9 +1,35 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { db } from './firebase';
+import { collection, query, getDocs } from 'firebase/firestore';
+
+export interface Collection {
+  id: string;
+  ownerId: string;
+  collectionName: string; // Assuming this matches your Firestore document
+  description: string;
+}
+
+// get user collections from firebase using user
+export const getUserCollections = async (
+  uid: string
+): Promise<Collection[]> => {
+  const q = query(collection(db, `users/${uid}/Collections`));
+  const querySnapshot = await getDocs(q);
+  const fetchedCollections = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...(doc.data() as Omit<Collection, 'id'>), // Assuming doc.data() includes collectionName and description
+  }));
+  console.log('fetchedCollections', fetchedCollections);
+  return fetchedCollections;
+};
+
+const collections = getUserCollections('uid');
 
 export interface User {
   uid: string;
   email: string | null;
+  username: string | null;
 }
 
 interface AuthState {
@@ -25,7 +51,6 @@ export const useAuthStore = create<AuthState>()(
   )
 );
 
-
 interface AddSequenceState {
   currentStep: number;
   setCurrentStep: (arg: number | ((prevStep: number) => number)) => void;
@@ -39,11 +64,11 @@ interface AddSequenceState {
   setTitlePreview: (titlePreview: string) => void;
   descriptionPreview: string;
   setDescriptionPreview: (descriptionPreview: string) => void;
-  
 
   // State for the working item
   selectedCollection: string;
   setSelectedCollection: (selectedCollection: string) => void;
+  initializeCollections: (uid: string) => void;
   QRCode: string;
   setQRCode: (QRCode: string) => void;
   dumpWorkingItem: () => void;
@@ -79,27 +104,34 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   titlePreview: '',
   setTitlePreview: (titlePreview: string) => set({ titlePreview }),
   descriptionPreview: '',
-  setDescriptionPreview: (descriptionPreview: string) => set({ descriptionPreview }),
-  
+  setDescriptionPreview: (descriptionPreview: string) =>
+    set({ descriptionPreview }),
 
   // State for the working item
-  selectedCollection: 'My Storage Unit',
+  selectedCollection: '',
   setSelectedCollection: (selectedCollection: string) =>
     set({ selectedCollection }),
+  initializeCollections: async (uid: string) => {
+    // This function should be called to initialize collections
+    const fetchedCollections = await getUserCollections(uid);
+    if (fetchedCollections.length > 0) {
+      // Automatically select the first collection as the default selected collection
+      set({ selectedCollection: fetchedCollections[0].id });
+    }
+  },
   QRCode: '',
   setQRCode: (QRCode: string) => set({ QRCode }),
   dumpWorkingItem: () => {
     set({
-      selectedCollection: 'My Storage Unit',
       QRCode: '',
-	  actionType: '',
-	  title: '',
-	  description: '',
-	  photo1: '',
-	  photo2: '',
-	  photo3: '',
-	  titlePreview: '',
-	  descriptionPreview: '',
+      actionType: '',
+      title: '',
+      description: '',
+      photo1: '',
+      photo2: '',
+      photo3: '',
+      titlePreview: '',
+      descriptionPreview: '',
     });
   },
   actionType: '',

@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 
 export default function Nav() {
   return (
-    <div className='flex justify-evenly items-center border-t relative w-full h-[12vh]'>
+    <div className='flex justify-evenly items-center border-t fixed bottom-0 z-10 bg-ltbg1 dark:bg-dkbg1 w-full h-[12vh]'>
       <LRNavButton />
       <CenterNavButton />
       <button>

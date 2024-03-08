@@ -5,7 +5,7 @@ const CameraDrawer: React.FC = () => {
   const photo2 = useAddSequenceStore((state) => state.photo2);
   const photo3 = useAddSequenceStore((state) => state.photo3);
   return (
-    <div className='h-fit w-full mx-auto max-w-3xl rounded-t-3xl text-center bg-ltbg2 dark:bg-dkbg2 absolute bottom-[12vh] py-4 border-t'>
+    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-ltbg1 dark:bg-dkbg1 fixed bottom-[12vh] py-8 border-t flex flex-col'>
       <h2 className='mb-2'>Take Photo</h2>
       <div className='mx-8 rounded-full flex justify-center gap-4'>
         <div
