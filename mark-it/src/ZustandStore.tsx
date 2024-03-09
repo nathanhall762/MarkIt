@@ -64,6 +64,8 @@ interface AddSequenceState {
   setTitlePreview: (titlePreview: string) => void;
   descriptionPreview: string;
   setDescriptionPreview: (descriptionPreview: string) => void;
+  fetchFlag: boolean;
+  toggleFetchFlag: () => void;
 
   // State for the working item
   selectedCollection: string;
@@ -106,6 +108,8 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   descriptionPreview: '',
   setDescriptionPreview: (descriptionPreview: string) =>
     set({ descriptionPreview }),
+  fetchFlag: false,
+  toggleFetchFlag: () => set((state) => ({ fetchFlag: !state.fetchFlag })),
 
   // State for the working item
   selectedCollection: '',

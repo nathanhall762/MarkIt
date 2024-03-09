@@ -215,7 +215,7 @@ export const useStepComponents = () => {
 
   const stepComponents: StepComponents = {
     0: () =>
-      user && user.uid === '45GunbHNtcZTq0X3GOpQEXXbIw43'
+      user && user.uid
         ? [<DropDownSelector />, <CardList userId={user.uid} />]
         : [<Login />],
     1: () => [<QRScannerViewport />, <DropDownSelector />],

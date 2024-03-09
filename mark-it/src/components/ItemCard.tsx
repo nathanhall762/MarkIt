@@ -1,14 +1,19 @@
 import type {Item} from './CardList';
+import DeleteButton from './DeleteButton';
+import useAddSequenceStore, {useAuthStore} from '../ZustandStore';
 
 const ItemCard: React.FC<Item> = ({
+  id,
   photos, // Adjust accordingly if handling multiple images
   title,
   priceRange,
   actionType,
   description,
 }) => {
+  const collectionId = useAddSequenceStore((state) => state.selectedCollection);
+  const userId = useAuthStore((state) => state.user?.uid);
   return (
-    <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border">
+    <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative">
       <div className="w-full rounded-t-3xl">
         <img
           className="w-full aspect-square object-cover rounded-t-3xl"
@@ -25,6 +30,7 @@ const ItemCard: React.FC<Item> = ({
           {actionType}
         </div>
       </div>
+      {userId && <DeleteButton itemId={id} collectionId={collectionId} userId={userId} />}
     </div>
   );
 };

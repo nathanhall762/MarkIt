@@ -26,8 +26,8 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
     (state) => state.selectedCollection
   );
   const collectionId = selectedCollection;
+  const fetchFlag = useAddSequenceStore((state) => state.fetchFlag);
 
-  useEffect(() => {
     const fetchItems = async () => {
       try {
         console.log('collectionId', collectionId);
@@ -47,8 +47,9 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
       }
     };
 
+  useEffect(() => {
     fetchItems();
-  }, [userId, collectionId, selectedCollection]);
+  }, [userId, collectionId, fetchFlag]);
 
   return (
     <div className='flex flex-wrap w-screen flex-row justify-center gap-4'>

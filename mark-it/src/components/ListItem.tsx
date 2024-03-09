@@ -1,14 +1,19 @@
 // ListItem.tsx
 import React from 'react';
 import type { Item } from './CardList'; // Assuming Item type is exported from CardList or a separate types file
+import DeleteButton from './DeleteButton'; // Import the DeleteButton component
+import useAddSequenceStore, { useAuthStore } from '../ZustandStore'; // Import ZustandStore and useAuthStore
 
 const ListItem: React.FC<Item> = ({
+  id,
   photos,
   title,
   priceRange,
   actionType,
   description,
 }) => {
+  const collectionId = useAddSequenceStore((state) => state.selectedCollection);
+  const userId = useAuthStore((state) => state.user?.uid);
   return (
     <div className="flex w-full items-center justify-between p-4 border-b h-32">
       <img src={photos[0]} alt={title} className="w-20 h-20 object-cover mr-4" />
@@ -21,6 +26,7 @@ const ListItem: React.FC<Item> = ({
         <div className="font-bold whitespace-nowrap">
           ${typeof priceRange === 'number' ? priceRange : `${priceRange.min}-${priceRange.max}`}
         </div>
+      {userId && <DeleteButton itemId={id} collectionId={collectionId} userId={userId} />}
       </div>
     </div>
   );
