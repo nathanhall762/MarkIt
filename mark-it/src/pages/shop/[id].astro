@@ -1,0 +1,70 @@
+---
+// Server-side code
+import { db } from '../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
+import type { DocumentData } from 'firebase/firestore';
+import LayoutWebsite from '../../layouts/LayoutWebsite.astro';
+import ItemImageCarousel from '../../components/ItemImageCarousel';
+
+export async function getStaticPaths() {
+  const itemsCollection = collection(db, 'Items');
+  const itemsSnapshot = await getDocs(itemsCollection);
+  const paths = itemsSnapshot.docs.map((doc) => ({
+    params: { id: doc.id },
+  }));
+
+  return paths;
+}
+
+const { id } = Astro.params;
+let item: DocumentData | null = null;
+
+try {
+  const itemRef = doc(db, 'Items', id ?? '');
+  const itemSnap = await getDoc(itemRef);
+
+  if (itemSnap.exists()) {
+    item = itemSnap.data();
+    console.log('item:', item);
+
+    if (item.actionType === 'store') {
+      // Redirect to /app if actionType is "store"
+      return Astro.redirect('/shop');
+    }
+  } else {
+    throw new Error('Item not found');
+  }
+} catch (error) {
+  console.error('Error fetching item:', error);
+  // Handle the error, e.g., show an error message or redirect to an error page
+}
+
+const { itemDetails } = (item as { itemDetails: any }) || {};
+const { photos, title, priceRange, description } = itemDetails || {};
+const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
+---
+
+<LayoutWebsite title={title} metaDescription={description}>
+  <main>
+    {item && (
+      <div class="flex relative flex-col w-[90vw] text-center justify-start h-full max-w-lg py-4">
+        <div class="py-2 border mb-4">{title}</div>
+        <ItemImageCarousel client:only="react" photos={photos} title={title} />
+        <div class="border py-2 mb-4 action-type text-center rounded-3xl">
+          {item.actionType}
+        </div>
+        <div class="border flex flex-row justify-between mb-4">
+          <div class="border py-2 text-center w-[30%]">{maxPrice}</div>
+          <div class="border py-2 action-type text-center w-[70%]">
+            location
+          </div>
+        </div>
+        <p set:html={description} />
+      </div>
+    )}
+  </main>
+</LayoutWebsite>
+
+<script>
+</script>

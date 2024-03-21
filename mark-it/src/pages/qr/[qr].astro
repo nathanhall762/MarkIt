@@ -1,0 +1,70 @@
+---
+// Server-side code
+import { db } from '../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
+import type { DocumentData } from 'firebase/firestore';
+import LayoutWebsite from '../../layouts/LayoutWebsite.astro';
+import ItemImageCarousel from '../../components/ItemImageCarousel';
+import ItemPage from '../../components/ItemPage';
+
+export async function getStaticPaths() {
+  const itemsCollection = collection(db, 'Items');
+  const itemsSnapshot = await getDocs(itemsCollection);
+
+  const paths = itemsSnapshot.docs.map((doc) => ({
+    params: { qr: doc.id },
+  }));
+
+  return [
+    ...paths,
+    {
+      params: { qr: 'fallback' },
+    },
+  ];
+}
+
+const { qr: id } = Astro.params;
+
+const message = 'Hello, world!';
+
+// check if the QR code is 6 characters long
+if (id?.length !== 6) {
+  return Astro.redirect('/');
+}
+
+let item: DocumentData | null = null;
+
+try {
+  const itemRef = doc(db, 'Items', id ?? '');
+  const itemSnap = await getDoc(itemRef);
+
+  if (itemSnap.exists()) {
+    item = itemSnap.data();
+    console.log('item:', item);
+
+    // if (item.actionType === 'store') {
+    //   // Redirect to /app if actionType is "store"
+    //   return Astro.redirect('/app');
+    // }
+  } else {
+    throw new Error('Item not found');
+  }
+} catch (error) {
+  console.error('Error fetching item:', error);
+  // Handle the error, e.g., show an error message or redirect to an error page
+}
+
+const { itemDetails } = (item as { itemDetails: any }) || {};
+const { photos, title, priceRange, description } = itemDetails || {};
+const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
+const actionType = (item) ? item.actionType: null;
+
+export const prerender = false;
+---
+
+<LayoutWebsite title={title} metaDescription={description}>
+  <main>
+    <ItemPage photos={photos} title={title} priceRange={priceRange} actionType={actionType} description={description} id={id}/>
+  </main>
+</LayoutWebsite>

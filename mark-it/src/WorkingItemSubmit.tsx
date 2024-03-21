@@ -1,6 +1,6 @@
 import useAddSequenceStore, { useAuthStore  } from './ZustandStore';
 import { firebaseApp } from './firebase';
-import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, doc, setDoc, addDoc } from 'firebase/firestore';
 
 const db = getFirestore(firebaseApp);
 
@@ -26,25 +26,29 @@ const useWorkingItemSubmit = () => {
 
     // Construct the item object based on your schema
     const itemData = {
-      QRCode,
+      userID: user.uid,
       actionType,
-      title,
-      description,
-      photos: [photo1, photo2, photo3].filter(Boolean), // Filter out empty strings
-      priceRange: {
-        min: priceRange[0], // Assuming priceRange is an array [min, max]
-        max: priceRange[1]
+      itemDetails: {
+        collectionName: selectedCollection,
+        title,
+        description,
+        photos: [photo1, photo2, photo3].filter(Boolean),
+        priceRange: {
+          min: priceRange[0],
+          max: priceRange[1]
+        },
+        QRCode,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-      createdAt: new Date(), // Firestore will convert this to a Timestamp
-      updatedAt: new Date(), // Firestore will convert this to a Timestamp
     };
 
-    // Reference to the user's collection document
-    const collectionRef = doc(db, `users/${user.uid}/Collections/${selectedCollection}/Items`, QRCode);
+    // Reference to the specific item document using the QR code as the document ID
+    const itemDocRef = doc(db, 'Items', QRCode);
     
-    // Set the document in Firestore
+    // Set the document in the Items collection
     try {
-      await setDoc(collectionRef, itemData);
+      await setDoc(itemDocRef, itemData);
       console.log('Item submitted successfully');
     } catch (error) {
       console.error('Error submitting item:', error);

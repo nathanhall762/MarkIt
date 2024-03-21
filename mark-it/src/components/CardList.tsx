@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { firebaseApp, db } from '../firebase';
-import { collection, query, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import ItemCard from './ItemCard';
 import ListItem from './ListItem';
 import useAddSequenceStore from '../ZustandStore';
@@ -28,24 +28,25 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
   const collectionId = selectedCollection;
   const fetchFlag = useAddSequenceStore((state) => state.fetchFlag);
 
-    const fetchItems = async () => {
-      try {
-        console.log('collectionId', collectionId);
-        const q = query(
-          collection(db, `users/${userId}/Collections/${collectionId}/Items`)
-        );
-        const querySnapshot = await getDocs(q);
-        const fetchedItems = querySnapshot.docs.map((doc) => ({
-          ...(doc.data() as Item),
-          id: doc.id,
-        }));
-        console.log('fetchedItems', fetchedItems);
-        setItems(fetchedItems);
-      } catch (error) {
-        console.error('Error fetching items:', error);
-        // Handle the error here, e.g. show an error message to the user
-      }
-    };
+  const fetchItems = async () => {
+    try {
+      const q = query(
+        collection(db, 'Items'),
+        where('userID', '==', userId),
+        where('itemDetails.collectionName', '==', collectionId)
+      );
+      const querySnapshot = await getDocs(q);
+      const fetchedItems = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data().itemDetails,
+      }));
+      console.log('fetchedItems', fetchedItems);
+      setItems(fetchedItems);
+    } catch (error) {
+      console.error('Error fetching items:', error);
+      // Handle the error here, e.g. show an error message to the user
+    }
+  };
 
   useEffect(() => {
     fetchItems();
