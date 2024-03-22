@@ -7,6 +7,8 @@ import type { DocumentData } from 'firebase/firestore';
 import LayoutWebsite from '../../layouts/LayoutWebsite.astro';
 import ItemImageCarousel from '../../components/ItemImageCarousel';
 
+
+// TODO: ensure static paths are made only for items with actionType "sell" or "rent"
 export async function getStaticPaths() {
   const itemsCollection = collection(db, 'Items');
   const itemsSnapshot = await getDocs(itemsCollection);

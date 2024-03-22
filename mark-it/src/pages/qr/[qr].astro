@@ -7,31 +7,15 @@ import type { DocumentData } from 'firebase/firestore';
 import LayoutWebsite from '../../layouts/LayoutWebsite.astro';
 import ItemImageCarousel from '../../components/ItemImageCarousel';
 import ItemPage from '../../components/ItemPage';
+import Layout from '../../layouts/Layout.astro';
+import ItemVerificationPage from '../../components/ItemVerificationPage';
 
-export async function getStaticPaths() {
-  const itemsCollection = collection(db, 'Items');
-  const itemsSnapshot = await getDocs(itemsCollection);
+const { qr: id = '' } = Astro.params;
 
-  const paths = itemsSnapshot.docs.map((doc) => ({
-    params: { qr: doc.id },
-  }));
-
-  return [
-    ...paths,
-    {
-      params: { qr: 'fallback' },
-    },
-  ];
-}
-
-const { qr: id } = Astro.params;
-
-const message = 'Hello, world!';
-
-// check if the QR code is 6 characters long
-if (id?.length !== 6) {
-  return Astro.redirect('/');
-}
+// TODO: move into react component and adjust as needed: check if the QR code is 6 characters long
+// if (id?.length !== 6) {
+//   return Astro.redirect('/');
+// }
 
 let item: DocumentData | null = null;
 
@@ -52,19 +36,41 @@ try {
   }
 } catch (error) {
   console.error('Error fetching item:', error);
-  // Handle the error, e.g., show an error message or redirect to an error page
+  return Astro.redirect(`/app?qrCode=${id}`);
 }
 
+console.log('item:', item);
 const { itemDetails } = (item as { itemDetails: any }) || {};
 const { photos, title, priceRange, description } = itemDetails || {};
 const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
-const actionType = (item) ? item.actionType: null;
+const actionType = item ? item.actionType : null;
+
+// if actionType is "sell" or "rent", navigate to /shop/[id]
+if (actionType === 'sell' || actionType === 'rent') {
+  return Astro.redirect(`/shop/${id}`);
+}
+
+// if actionType is "store", navigate to /app?qrCode=[id]
+if (actionType === 'store') {
+  return Astro.redirect(`/app?qrCode=${id}&actionType=store`);
+}
+
+// if actionType is undefined, navigate to /app?qrCode=[id]
+if (!actionType) {
+  return Astro.redirect(`/app?qrCode=${id}`);
+}
 
 export const prerender = false;
 ---
 
-<LayoutWebsite title={title} metaDescription={description}>
+<Layout
+  title={title}
+  metaDescription={description}>
   <main>
-    <ItemPage photos={photos} title={title} priceRange={priceRange} actionType={actionType} description={description} id={id}/>
+    <!-- <ItemVerificationPage
+      item={item}
+      id={id}
+      client:load
+    /> -->
   </main>
-</LayoutWebsite>
+</Layout>

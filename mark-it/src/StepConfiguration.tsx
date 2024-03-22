@@ -73,15 +73,18 @@ export const useStepRules = () => {
     1: () => {
       setLeftButtonIcon('ep:back');
       setCenterButtonIcon('tabler:arrow-right');
-      if (selectedCollection && QRCode !== '') {
+      if (QRCode !== '') {
         setIsCenterButtonEnabled(true);
       } else {
         setIsCenterButtonEnabled(false);
       }
     },
     2: () => {
+      setLeftButtonIcon('ep:back');
       if (selectedCollection && QRCode !== '' && actionType) {
         setIsCenterButtonEnabled(true);
+        const cleanUrl = window.location.pathname;
+        history.replaceState(null, '', cleanUrl);
       } else {
         setIsCenterButtonEnabled(false);
       }
@@ -218,8 +221,8 @@ export const useStepComponents = () => {
       user && user.uid
         ? [<DropDownSelector />, <CardList userId={user.uid} />]
         : [<Login />],
-    1: () => [<QRScannerViewport />, <DropDownSelector />],
-    2: () => [<ActionTypeSelector />],
+    1: () => [<QRScannerViewport />],
+    2: () => [<DropDownSelector />, <ActionTypeSelector />],
     3: () => [
       <ItemCard
         id={QRCode}

@@ -11,9 +11,13 @@ const ItemCard: React.FC<Item> = ({
   description,
 }) => {
   const collectionId = useAddSequenceStore((state) => state.selectedCollection);
+  const setItemPageVisible = useAddSequenceStore((state) => state.setItemPageVisible);
   const userId = useAuthStore((state) => state.user?.uid);
+  const handleClick = () => {
+    setItemPageVisible(true);
+  };
   return (
-    <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative">
+    <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative" onClick={handleClick}>
       <div className="w-full rounded-t-3xl">
         <img
           className="w-full aspect-square object-cover rounded-t-3xl"

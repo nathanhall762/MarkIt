@@ -7,6 +7,7 @@ import useAddSequenceStore, {
 import type { Collection } from '../ZustandStore';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import { ref } from 'firebase/storage';
 
 const DropdownSelector = () => {
   const user = useAuthStore((state) => state.user);
@@ -23,10 +24,19 @@ const DropdownSelector = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // async function to refresh collections list
+  const refreshCollections = async () => {
+    if (user?.uid) {
+      const fetchedCollections = await getUserCollections(user.uid);
+      setCollections(fetchedCollections);
+    }
+  };
+
   useEffect(() => {
     if (user?.uid) {
       initializeCollections(user.uid);
     }
+    refreshCollections();
   }, [user, initializeCollections]);
 
   useEffect(() => {
@@ -63,6 +73,7 @@ const DropdownSelector = () => {
         await addDoc(collection(db, `users/${user.uid}/Collections`), {
           collectionName: newCollectionName,
           description: '', // Add logic to get description if necessary
+          ownerID: user.uid,
           // Add any other fields you require
         });
         alert('New collection added successfully.');
@@ -105,14 +116,14 @@ const DropdownSelector = () => {
             <div
               key={collection.id} // Use collection.id instead of collection.ownerId
               onClick={() => handleSelectCollection(collection.id)}
-              className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer'>
-              {collection.collectionName}
+              className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer hover:bg-ltbg2 dark:hover:bg-dkbg2'>
+              {collection.collectionName} - <span className='opacity-50'>{selectedCollection}</span>
             </div>
           ))}
 
           <div
             onClick={handleAddCollection}
-            className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer border-t'>
+            className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer border-t hover:bg-ltbg2 dark:hover:bg-dkbg2'>
             Add Collection
           </div>
         </div>
