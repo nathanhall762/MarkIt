@@ -57,6 +57,7 @@ if (actionType === 'store') {
 
 // if actionType is undefined, navigate to /app?qrCode=[id]
 if (!actionType) {
+  console.log(actionType, 'actionType is undefined');
   return Astro.redirect(`/app?qrCode=${id}`);
 }
 

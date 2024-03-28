@@ -1,40 +1,40 @@
-import type {Item} from './CardList';
+import type {Item} from '../types/items.ts';
 import DeleteButton from './DeleteButton';
 import useAddSequenceStore, {useAuthStore} from '../ZustandStore';
 
 const ItemCard: React.FC<Item> = ({
-  id,
-  photos, // Adjust accordingly if handling multiple images
-  title,
-  priceRange,
-  actionType,
-  description,
+  itemDetails
 }) => {
   const collectionId = useAddSequenceStore((state) => state.selectedCollection);
   const setItemPageVisible = useAddSequenceStore((state) => state.setItemPageVisible);
   const userId = useAuthStore((state) => state.user?.uid);
+  const itemID = useAddSequenceStore((state) => state.itemID);
+  const setItemID = useAddSequenceStore((state) => state.setItemID);
   const handleClick = () => {
-    setItemPageVisible(true);
+    console.log('Item clicked', itemDetails.QRCode); // This should log the correct QR code
+    setItemID(itemDetails.QRCode); // Use the QRCode from itemDetails to set the item ID
+    setItemPageVisible(true); // Assuming the second argument should be itemID or some other identifier
   };
+  
   return (
     <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative" onClick={handleClick}>
       <div className="w-full rounded-t-3xl">
         <img
           className="w-full aspect-square object-cover rounded-t-3xl"
-          src={photos[0]}
-          alt={title}
+          src={itemDetails.photos[0]}
+          alt={itemDetails.title}
         />
       </div>
-      <div className="py-2 border">{title}</div>
+      <div className="py-2 border">{itemDetails.title}</div>
       <div className="border flex flex-row justify-between rounded-b-3xl">
         <div className="border py-2 text-center w-1/3 rounded-bl-3xl">
-          ${typeof priceRange === 'object' ? priceRange.min : priceRange}
+          ${typeof itemDetails.priceRange === 'object' ? itemDetails.priceRange.max : itemDetails.priceRange}
         </div>
         <div className="border py-2 action-type text-center w-2/3 rounded-br-3xl">
-          {actionType}
+          {itemDetails.collectionName}
         </div>
       </div>
-      {userId && <DeleteButton itemId={id} collectionId={collectionId} userId={userId} />}
+      {userId && <DeleteButton itemId={itemDetails.QRCode} collectionId={collectionId} userId={userId} />}
     </div>
   );
 };

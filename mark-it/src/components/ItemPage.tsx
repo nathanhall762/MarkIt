@@ -1,12 +1,15 @@
-import type { Item } from './CardList';
+import type { Item } from '../types/items.ts';
 import ItemImageCarousel from './ItemImageCarousel';
 
 const ItemPage: React.FC<Item> = ({
-  photos,
-  title,
-  priceRange,
   actionType,
-  description,
+  itemDetails: {
+    QRCode,
+    description,
+    photos,
+    priceRange,
+    title,
+  },
 }) => {
   const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
   return (

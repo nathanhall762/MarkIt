@@ -1,10 +1,12 @@
 import Nav from './Nav';
 import { useStepComponents, useStepRules } from '../StepConfiguration';
 import React, { useEffect } from 'react';
-import useAddSequenceStore from '../ZustandStore';
+import useAddSequenceStore, { useAuthStore } from '../ZustandStore';
 import { useLocation } from 'react-router-dom';
-import { set } from 'firebase/database';
+import { query, set } from 'firebase/database';
 import ItemPageContainer from './ItemModal';
+import { collection, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const MyApp: React.FC = () => {
   const stepComponents = useStepComponents();
@@ -24,36 +26,63 @@ const MyApp: React.FC = () => {
   const setItemPageVisible = useAddSequenceStore(
     (state) => state.setItemPageVisible
   );
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    // Directly use window.location.search to get query parameters
     const queryParams = new URLSearchParams(window.location.search);
-    const actionTypeParam = queryParams.get('actionType');
     const qrCode = queryParams.get('qrCode');
+
     if (qrCode) {
-      if (actionTypeParam) {
-        if (actionTypeParam === 'store') {
-          setItemPageVisible(true);
+      const searchItemInFirestore = async () => {
+        try {
+          const itemDocRef = doc(db, 'Items', qrCode);
+          const docSnapshot = await getDoc(itemDocRef);
+
+          if (docSnapshot.exists()) {
+            console.log(docSnapshot.data().userID);
+            // DB hit: QR code found in Firestore
+            console.log('DB hit!');
+            // TODO: Perform actions for DB hit
+            // if item has actionType of 'sell' or 'rent', show item page
+            const actionType = docSnapshot.data().actionType;
+            if (actionType === 'sell' || actionType === 'rent') {
+              setItemPageVisible(true);
+              // if item has actionType of 'store'
+            } else if (actionType === 'store') {
+              // if user is not logged in, show login page
+              // if user is logged in and item's ownerid matches userid, show item page
+              if (user && user.uid === docSnapshot.data().userID) {
+                setItemPageVisible(true);
+              } else {
+                // if user is logged in and item's ownerid does not match userid and item's actionType is 'store', show 'this item is not for sale' page
+                alert('This item is not for sale');
+              }
+
+              // if user is logged in and item's ownerid does not match userid and item's actionType is 'store', show 'this item is not for sale' page
+            }
+          } else {
+            // DB miss: QR code not found in Firestore
+            console.log('DB miss!');
+            // TODO: Perform actions for DB miss
+            // if user is not logged in, show login page
+            // if user is logged in, set QR code in Zustand store and set current step to 2
+            setQRCode(qrCode);
+            setCurrentStep(2);
+          }
+        } catch (error) {
+          console.error('Error searching for item in Firestore:', error);
         }
-      } else {
-        setQRCode(qrCode);
-        setCurrentStep(2);
-        console.log('qrCode', qrCode);
-        console.log('getQRCode', getQRCode);
-        console.log('getActionType', getActionType);
-        
-      }
+      };
+
+      searchItemInFirestore();
     }
-  }, [setQRCode, setCurrentStep, getQRCode, getActionType]);
+  }, []);
 
   useEffect(() => {
     const ruleForCurrentStep = stepRules[currentStep];
     if (typeof ruleForCurrentStep === 'function') {
       ruleForCurrentStep();
     }
-    console.log('selectedCollection', selectedCollection);
-    console.log('getQRCode', getQRCode);
-    console.log('getActionType', getActionType);
   }, [currentStep, stepRules]);
 
   return (

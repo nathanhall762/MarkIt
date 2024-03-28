@@ -68,6 +68,9 @@ interface AddSequenceState {
   toggleFetchFlag: () => void;
   itemPageVisible: boolean;
   setItemPageVisible: (itemPageVisible: boolean) => void;
+  itemID: string;
+  setItemID: (itemID: string) => void;
+
 
   // State for the working item
   selectedCollection: string;
@@ -113,6 +116,8 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   fetchFlag: false,
   toggleFetchFlag: () => set((state) => ({ fetchFlag: !state.fetchFlag })),
   itemPageVisible: false,
+  itemID: '',
+  setItemID: (itemID: string) => set({ itemID }),
   setItemPageVisible: (itemPageVisible: boolean) =>
     set({ itemPageVisible }),
 

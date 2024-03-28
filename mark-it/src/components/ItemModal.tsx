@@ -1,17 +1,51 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ItemPage from './ItemPage';
 import { Icon } from '@iconify/react';
 import useAddSequenceStore from '../ZustandStore';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import type { Item } from '../types/items.ts';
 
 const ItemPageContainer: React.FC = () => {
+  const [itemDetails, setItemDetails] = useState<Item | null>(null);
   const itemPageVisible = useAddSequenceStore((state) => state.itemPageVisible);
   const setItemPageVisible = useAddSequenceStore(
     (state) => state.setItemPageVisible
   );
+  const itemID = useAddSequenceStore((state) => state.itemID);
+  const setItemID = useAddSequenceStore((state) => state.setItemID);
 
   const handleClose = () => {
+    setItemID('');
     setItemPageVisible(false);
   };
+
+  useEffect(() => {
+    // Define an async function to fetch item details
+    const fetchItemDetails = async () => {
+      if (!itemID) {
+        console.log('Item ID not set'); // FIXME: this is always triggering
+        return;
+      }  // Early return if itemID is not set
+
+      const docRef = doc(db, 'Items', itemID); // Adjust path as needed
+      try {
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setItemDetails(docSnap.data() as Item);
+          console.log('Document data:', docSnap.data());
+        } else {
+          console.log('No such document!');
+          // Handle case where document doesn't exist
+        }
+      } catch (error) {
+        console.error('Error fetching document:', error);
+        // Handle any errors that occur during fetch
+      }
+    };
+
+    fetchItemDetails();
+  }, [itemID]); // Re-fetch when itemID changes
   return (
     <div className='fixed z-50 h-[80.5vh] w-screen top-[7.5vh] bg-ltbg2 dark:bg-dkbg1 flex items-center justify-center'>
       {/* Add your other app elements here */}
@@ -24,13 +58,11 @@ const ItemPageContainer: React.FC = () => {
           width={24}
         />
       </button>
-      <ItemPage
-        id={''}
-        title={''}
-        photos={[]}
-        priceRange={0}
-        actionType={''}
-      />
+      {itemDetails && (
+        <ItemPage
+          {...itemDetails}
+        />
+      )}
     </div>
   );
 };

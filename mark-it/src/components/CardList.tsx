@@ -4,16 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import ItemCard from './ItemCard';
 import ListItem from './ListItem';
 import useAddSequenceStore from '../ZustandStore';
-
-export interface Item {
-  id: string;
-  title: string;
-  description?: string;
-  photos: string[]; // Assuming multiple photos can be stored in an array
-  priceRange: { min: number; max: number } | number;
-  actionType: string;
-}
-
+import type { Item } from '../types/items.ts';
 // Optionally, if `CardList` needs props like `userId` and `collectionId`, define an interface for them
 interface CardListProps {
   userId: string;
@@ -27,6 +18,11 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
   );
   const collectionId = selectedCollection;
   const fetchFlag = useAddSequenceStore((state) => state.fetchFlag);
+  const setItemPageVisible = useAddSequenceStore(
+    (state) => state.setItemPageVisible
+  );
+  const setItemID = useAddSequenceStore((state) => state.setItemID);
+  const itemID = useAddSequenceStore((state) => state.itemID);
 
   const fetchItems = async () => {
     try {
@@ -36,9 +32,8 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
         where('itemDetails.collectionName', '==', collectionId)
       );
       const querySnapshot = await getDocs(q);
-      const fetchedItems = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data().itemDetails,
+      const fetchedItems: Item[] = querySnapshot.docs.map((doc) => ({
+        ...doc.data() as Item,
       }));
       console.log('fetchedItems', fetchedItems);
       setItems(fetchedItems);
@@ -52,17 +47,18 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
     fetchItems();
   }, [userId, collectionId, fetchFlag]);
 
+
   return (
     <div className='flex flex-wrap w-screen flex-row justify-center gap-4'>
       {items.map((item) =>
         isListView ? (
           <ListItem
-            key={item.id}
+            key={item.itemDetails.QRCode}
             {...item} // Spread item props
           />
         ) : (
           <ItemCard
-            key={item.id}
+            key={item.itemDetails.QRCode}
             {...item} // Spread item props
           />
         )
