@@ -1,12 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import MyApp from '../components/App.tsx';
-
+import MyApp from '../components/MyApp.tsx';
 ---
 
-<Layout title="MarkIt App" metaDescription='MarkIt App'>
-	<main>
-		<MyApp client:load/>
-	</main>
+<Layout
+  title='MarkIt App'
+  metaDescription='MarkIt App'>
+  <main>
+    <MyApp client:load />
+  </main>
 </Layout>
-
+../components/MyApp.tsx

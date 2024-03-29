@@ -18,6 +18,12 @@ const ItemPageContainer: React.FC = () => {
   const handleClose = () => {
     setItemID('');
     setItemPageVisible(false);
+    // remove query params
+    const url = new URL(window.location.href);
+    url.searchParams.delete('qrCode');
+    window.history.pushState({}, '', url.toString());
+    
+
   };
 
   useEffect(() => {
@@ -53,7 +59,7 @@ const ItemPageContainer: React.FC = () => {
         onClick={handleClose}
         className='text-red-500 md:opacity-100 lg:opacity-50 border hover:opacity-100 hover:text-red-700 w-fit bg-ltbg1 dark:bg-dkbg1 p-2 rounded-full absolute right-0 m-2'>
         <Icon
-          icon='bi:trash'
+          icon='oi:x'
           height={24}
           width={24}
         />

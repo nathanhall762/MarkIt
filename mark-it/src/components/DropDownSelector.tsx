@@ -58,6 +58,7 @@ const DropdownSelector = () => {
   const handleSelectCollection = (collectionId: string) => {
     setSelectedCollection(collectionId);
     setIsDropdownVisible(false);
+    // TODO: update user document with selected collection as the defaultCollection
   };
 
   // Function to handle adding a new collection
