@@ -1,4 +1,4 @@
-import type { Item } from "./CardList";
+import type { Item } from "../types/items";
 
 interface ItemImageCarouselProps {
   photos: string[];

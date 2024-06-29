@@ -4,7 +4,9 @@ const fs = require('fs');
 
 function generateUUID() {
   // Generates a 6-digit hexadecimal UUID
-  return [...Array(6)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+  return [...Array(6)]
+    .map(() => Math.floor(Math.random() * 16).toString(16))
+    .join('');
 }
 
 function generateNewQRCodeSheet() {
@@ -15,9 +17,9 @@ function generateNewQRCodeSheet() {
   const cmToPoints = (cm) => (cm / 2.54) * 72;
 
   // Update these based on the label specifications
-  const topMargin = cmToPoints(1.15);
+  const topMargin = cmToPoints(1.3);
   const sideMargin = cmToPoints(0.9);
-  const gapBetweenStickers = cmToPoints(0.5); // Gap between stickers
+  const gapBetweenStickers = cmToPoints(0.35); // Gap between stickers
 
   const codesPerRow = 7; // Adjust if needed based on actual label width
   const codesPerColumn = 9; // Adjust if needed based on actual label height
@@ -31,7 +33,8 @@ function generateNewQRCodeSheet() {
   for (let i = 0; i < codesPerColumn; i++) {
     for (let j = 0; j < codesPerRow; j++) {
       const uuid = generateUUID();
-      const qrSvg = qr.imageSync(uuid, { type: 'png', size: 10 });
+      const qrLink = `https://markitstorage.com/app/?=${uuid}`;
+      const qrSvg = qr.imageSync(qrLink, { type: 'png', size: 10 });
 
       const xPosition = startX + j * (qrSize + padding);
       const yPosition = startY + i * (qrSize + padding);

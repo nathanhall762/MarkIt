@@ -1,16 +1,12 @@
 // ListItem.tsx
 import React from 'react';
-import type { Item } from './CardList'; // Assuming Item type is exported from CardList or a separate types file
+import type { Item } from '../types/items'; // Assuming Item type is exported from CardList or a separate types file
 import DeleteButton from './DeleteButton'; // Import the DeleteButton component
 import useAddSequenceStore, { useAuthStore } from '../ZustandStore'; // Import ZustandStore and useAuthStore
 
 const ListItem: React.FC<Item> = ({
-  id,
-  photos,
-  title,
-  priceRange,
   actionType,
-  description,
+  itemDetails: { QRCode: id, photos, title, priceRange, description },
 }) => {
   const collectionId = useAddSequenceStore((state) => state.selectedCollection);
   const userId = useAuthStore((state) => state.user?.uid);
