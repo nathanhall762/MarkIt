@@ -24,11 +24,15 @@ export default function NavButton(): React.ReactElement {
     if (file) {
       // Here, upload the file to firebase storage and setPhoto1 to the URL
       try {
+        // Conver image file to webm format
+        const webmFile = new File([file], 'image.webm', { type: 'image/webm' });
+        setPhoto1(URL.createObjectURL(webmFile));
+        console.log('webmFile', webmFile);
         // Create a storage reference
         const fileRef = storageRef(storage, `${user?.uid}/${QRCode}`);
   
         // Upload the file
-        const snapshot = await uploadBytes(fileRef, file);
+        const snapshot = await uploadBytes(fileRef, webmFile);
   
         // After upload completes, get the download URL
         const downloadURL = await getDownloadURL(snapshot.ref);
