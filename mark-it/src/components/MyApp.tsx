@@ -99,7 +99,7 @@ const MyApp: React.FC = () => {
 
   return (
     <div className='mx-auto bg-ltbg1 dark:bg-dkbg2 relative top-[7.5vh] box-border'>
-      <div className='mb-[12vh] pt-[4vh] pb-[16vh] min-h-[80.5vh] flex items-center flex-col justify-evenly overflow-scroll'>
+      <div className='mb-[12vh] pt-[4vh] pb-[16vh] min-h-[80.5vh] flex items-center flex-col justify-evenly overflow-clip'>
         {stepComponents.map((Component, index) => (
           <React.Fragment key={index}>{Component}</React.Fragment>
         ))}
