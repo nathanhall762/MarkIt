@@ -6,10 +6,17 @@ import { collection, query, getDocs } from 'firebase/firestore';
 export interface Collection {
   id: string;
   ownerId: string;
-  collectionName: string; // Assuming this matches your Firestore document
+  collectionName: string;
   description: string;
 }
 
+export interface User {
+  uid: string;
+  email: string | null;
+  username: string | null;
+}
+
+// TODO: Does this get used anywhere?
 // get user collections from firebase using user
 export const getUserCollections = async (
   uid: string
@@ -18,19 +25,12 @@ export const getUserCollections = async (
   const querySnapshot = await getDocs(q);
   const fetchedCollections = querySnapshot.docs.map((doc) => ({
     id: doc.id,
-    ...(doc.data() as Omit<Collection, 'id'>), // Assuming doc.data() includes collectionName and description
+    ...(doc.data() as Omit<Collection, 'id'>),
   }));
-  console.log('fetchedCollections', fetchedCollections);
   return fetchedCollections;
 };
 
-const collections = getUserCollections('uid');
-
-export interface User {
-  uid: string;
-  email: string | null;
-  username: string | null;
-}
+const collections = getUserCollections('uid'); // TODO: Can this be deleted?
 
 interface AuthState {
   user: User | null;

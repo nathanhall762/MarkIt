@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import menuIcon from '@iconify/icons-mdi/menu';
 import closeIcon from '@iconify/icons-mdi/close';
+import Button from './Button';
+import { handleLogOut } from '../auth/logout';
+import useAuthStore from '../ZustandStore';
+
 
 interface HeaderProps {
   title: string;
@@ -82,9 +86,10 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
       </div>
       <div className='hidden lg:col-span-1 lg:flex justify-center items-center align-middle'>
         <a href='/app' className=''>
-          <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg  transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
-            Log In
-          </button>
+            <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
+              App
+            </button>
+          <Button text='Log Out' onClick={handleLogOut}/>
         </a>
       </div>
     </header>

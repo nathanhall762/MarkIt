@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import { FirebaseError } from 'firebase/app';
 import { useAuthStore } from '../ZustandStore';
 import type { User } from '../ZustandStore';
+import Button from './Button';
+import { handleLogOut } from '../auth/logout';
+
+const BETA_PASSWORD = 'TulsaTime'; // TODO: Move to .env and github secrets
 
 interface LoginData {
   email: string;
@@ -22,15 +26,60 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     email: '',
     password: '',
   });
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [betaPassword, setBetaPassword] = useState(''); // State for beta password input
+
+  const handleBetaPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBetaPassword(e.target.value);
+  };
+
+  const validateBetaPassword = () => {
+    if (betaPassword === BETA_PASSWORD) {
+      setShowModal(false);
+      signUp(); // Only call signUp if the beta password is correct
+    } else {
+      alert('Incorrect Beta Password');
+    }
+  };
+
+  async function signUp() {
+    const { createUserWithEmailAndPassword, getAuth } = await import(
+      'firebase/auth'
+    );
+    const auth = getAuth(firebaseApp);
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      loginData.email,
+      loginData.password
+    ).catch((err) => {
+      if (err.constructor !== FirebaseError) {
+        alert('fix this');
+        throw new Error('this is broke in a special way');
+      }
+      if (err.code === 'auth/email-already-in-use') alert('Email in use');
+      if (err.code === 'auth/invalid-email') alert('Invalid Email');
+      if (err.code === 'auth/weak-password') alert('Weak Password');
+      console.log(err);
+    });
+
+    if (userCredential && userCredential.user) {
+      // Construct the User object expected by setUser
+      const userData: User = {
+        uid: userCredential.user.uid,
+        email: userCredential.user.email,
+        username: userCredential.user.displayName,
+      };
+      setUser(userData); // Pass the User object to setUser
+    }
+  }
 
   async function signIn() {
     setSigningIn(true);
-    console.log(firebaseApp);
     const { signInWithEmailAndPassword, getAuth } = await import(
       'firebase/auth'
     );
     const auth = getAuth(firebaseApp);
-    console.log(auth);
 
     const userCredential = await signInWithEmailAndPassword(
       auth,
@@ -62,8 +111,6 @@ const Login: React.FC<LoginProps> = ({ message }) => {
       };
       setSigningIn(true);
       setUser(userData); // Pass the User object to setUser
-    } else {
-      // Handle case where sign in fails and no user is returned
     }
   }
 
@@ -73,21 +120,11 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     setLoginData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleLogOut = async () => {
-    const { getAuth } = await import('firebase/auth');
-    const auth = getAuth(firebaseApp);
-
-    auth.signOut();
-    setUser(null);
-  };
-
   useEffect(() => {
     if (signingIn) {
       const intervalId = setInterval(() => {
         setDots((prevDots) => (prevDots.length >= 3 ? '' : prevDots + '.'));
       }, 500);
-
-      // Clear the interval when the component unmounts
       return () => clearInterval(intervalId);
     }
   });
@@ -139,19 +176,34 @@ const Login: React.FC<LoginProps> = ({ message }) => {
               className='px-4 py-2 border rounded-md mb-2'
             />
             <div>
-              {/* <button
-                onClick={signUp}
-                className='mr-2 px-4 py-2 bg-blue-500 text-white rounded-md'>
-                Sign Up
-              </button> */}
-              <button
-                onClick={signIn}
-                className='px-4 py-2 bg-blue-500 text-white rounded-md'>
-                Login
-              </button>
+              <Button text='Sign Up' onClick={() => setShowModal(true)}></Button>
+              <Button text='Login' onClick={signIn}></Button>
             </div>
+            <p id='login-message'></p>
           </div>
         </div>
+        {/* Modal for beta password */}
+        {showModal && (
+          <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75'>
+            <div className='bg-white p-6 rounded-md text-center'>
+              <h2 className='text-xl font-semibold mb-4'>
+                We are in closed Beta. What is the password?
+              </h2>
+              <input
+                type='password'
+                value={betaPassword}
+                onChange={handleBetaPasswordChange}
+                placeholder='Enter Beta Password'
+                className='px-4 py-2 border rounded-md mb-4'
+              />
+              <Button text='Submit' onClick={validateBetaPassword} />
+              <Button
+                text='Cancel'
+                onClick={() => setShowModal(false)}
+              />
+            </div>
+          </div>
+        )}
       </div>
     );
   }

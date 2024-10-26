@@ -10,18 +10,14 @@ import {
 } from './components/InputDrawer';
 import PriceSlider from './components/PriceSlider';
 import Login from './components/Login';
-// Import other components as needed
 
 // Import the Zustand store
 import useAddSequenceStore, { useAuthStore } from './ZustandStore';
 import CardList from './components/CardList';
 
-// Define a type or interface for the components mapping if needed
 interface StepComponents {
-  [key: number]: () => JSX.Element[]; // Function returns an array of JSX elements
+  [key: number]: () => JSX.Element[];
 }
-
-// Define the mapping
 
 // Function to define rules for the app at each step. The function will conditionally set isCenterButtonEnabled to true depending on conditions met in state. i.e conditions: selectedCollection not Null -> highlight Add
 export const useStepRules = () => {
@@ -48,8 +44,6 @@ export const useStepRules = () => {
   const description = useAddSequenceStore((state) => state.description);
   const titlePreview = useAddSequenceStore((state) => state.titlePreview);
   const photo1 = useAddSequenceStore((state) => state.photo1);
-  const photo2 = useAddSequenceStore((state) => state.photo2);
-  const photo3 = useAddSequenceStore((state) => state.photo3);
   const descriptionPreview = useAddSequenceStore(
     (state) => state.descriptionPreview
   );
@@ -62,7 +56,6 @@ export const useStepRules = () => {
     0: () => {
       dumpWorkingItem();
       setCenterButtonIcon('tabler:plus');
-      console.log('selectedCollection', selectedCollection);
       setSelectedCollection(selectedCollection);
       setLeftButtonIcon('material-symbols:search');
       setIsCenterButtonEnabled(false);
@@ -105,7 +98,6 @@ export const useStepRules = () => {
         QRCode !== '' &&
         actionType &&
         photo1
-        // photo2
       ) {
         setCenterButtonIcon('tabler:arrow-right');
         setIsCenterButtonEnabled(true);
@@ -113,37 +105,6 @@ export const useStepRules = () => {
         setCenterButtonIcon('tabler:camera');
       }
     },
-    // 5: () => {
-    //   setIsCenterButtonEnabled(true);
-    //   if (
-    //     selectedCollection &&
-    //     QRCode !== '' &&
-    //     actionType &&
-    //     photo1 &&
-    //     photo2 &&
-    //     photo3
-    //   ) {
-    //     setCenterButtonIcon('tabler:arrow-right');
-    //     setIsCenterButtonEnabled(true);
-    //   } else {
-    //     setCenterButtonIcon('tabler:camera');
-    //   }
-    // },
-    // 6: () => {
-    //   if (
-    //     selectedCollection &&
-    //     QRCode !== '' &&
-    //     actionType &&
-    //     photo1 &&
-    //     photo2 &&
-    //     photo3 &&
-    //     titlePreview !== ''
-    //   ) {
-    //     setIsCenterButtonEnabled(true);
-    //   } else {
-    //     setIsCenterButtonEnabled(false);
-    //   }
-    // },
     5: () => {
       setTitle(titlePreview);
       if (
@@ -151,8 +112,6 @@ export const useStepRules = () => {
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        // photo2 &&
-        // photo3 &&
         title &&
         descriptionPreview !== ''
       ) {
@@ -168,8 +127,6 @@ export const useStepRules = () => {
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        // photo2 &&
-        // photo3 &&
         title &&
         description
       ) {
@@ -185,8 +142,6 @@ export const useStepRules = () => {
         QRCode !== '' &&
         actionType &&
         photo1 &&
-        // photo2 &&
-        // photo3 &&
         title &&
         description &&
         priceRange.length > 0
@@ -218,7 +173,7 @@ export const useStepComponents = () => {
 
   const stepComponents: StepComponents = {
     0: () =>
-      user && user.uid
+      user && user.uid // TODO: can hacker enter uid as state and bypass login?
         ? [<DropDownSelector />, <CardList userId={user.uid} />]
         : [<Login />],
     1: () => [<QRScannerViewport />],
@@ -243,26 +198,6 @@ export const useStepComponents = () => {
       />,
       <CameraDrawer />,
     ],
-    // 4: () => [
-    //   <ItemPage
-    //     actionType={actionType}
-    //     imageSrc={photo1} // Keeping photo1 for the final display
-    //     price={priceRange[1]} // Final price from priceRange[1]
-    //     title={title}
-    //     description={description}
-    //   />,
-    //   <CameraDrawer />,
-    // ],
-    // 5: () => [
-    //   <ItemPage
-    //     actionType={actionType}
-    //     imageSrc={photo1} // Keeping photo1 for the final display
-    //     price={priceRange[1]} // Final price from priceRange[1]
-    //     title={title}
-    //     description={description}
-    //   />,
-    //   <CameraDrawer />,
-    // ],
     4: () => [
       <ItemPage
       actionType={actionType}
