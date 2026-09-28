@@ -131,7 +131,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
 
   if (user && user.uid) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center'>
         <div className='text-center'>
           {/* <h3 className='text-xl'>
             Logged in as {user.userCredential.user.email}
@@ -146,7 +146,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     );
   } else if (signingIn) {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center'>
         <div className='text-center'>
           <div className='text-xl'>Signing You In{dots}</div>
         </div>
@@ -154,7 +154,7 @@ const Login: React.FC<LoginProps> = ({ message }) => {
     );
   } else {
     return (
-      <div className='flex justify-center items-center h-screen'>
+      <div className='flex justify-center items-center'>
         <div className='text-center flex flex-col '>
           <div className='mb-4'>{message}</div>
           <div className='flex flex-col'>
