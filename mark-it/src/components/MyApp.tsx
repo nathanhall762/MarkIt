@@ -1,28 +1,28 @@
-
 import Nav from './Nav';
-import { useStepComponents, useStepRules } from '../StepConfiguration';
-import React, { useEffect } from 'react';
+import { useStepComponents } from '../StepConfiguration';
+import React, { useEffect, useRef } from 'react';
 import useAddSequenceStore, { useAuthStore } from '../ZustandStore';
-import { useLocation } from 'react-router-dom';
-import { query, set } from 'firebase/database';
 import ItemPageContainer from './ItemModal';
-import { collection, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const MyApp: React.FC = () => {
   const stepComponents = useStepComponents();
   const currentStep = useAddSequenceStore((state) => state.currentStep);
   const setCurrentStep = useAddSequenceStore((state) => state.setCurrentStep);
-  const stepRules = useStepRules();
+  const dumpWorkingItem = useAddSequenceStore(
+    (state) => state.dumpWorkingItem
+  );
+  const titlePreview = useAddSequenceStore((state) => state.titlePreview);
+  const setTitle = useAddSequenceStore((state) => state.setTitle);
+  const descriptionPreview = useAddSequenceStore(
+    (state) => state.descriptionPreview
+  );
+  const setDescription = useAddSequenceStore(
+    (state) => state.setDescription
+  );
+  const previousStepRef = useRef<typeof currentStep | null>(null);
   const setQRCode = useAddSequenceStore((state) => state.setQRCode);
-  const getQRCode = useAddSequenceStore((state) => state.QRCode);
-  const getActionType = useAddSequenceStore((state) => state.actionType);
-  const getUserCollections = useAddSequenceStore(
-    (state) => state.initializeCollections
-  );
-  const selectedCollection = useAddSequenceStore(
-    (state) => state.selectedCollection
-  );
   const itemPageVisible = useAddSequenceStore((state) => state.itemPageVisible);
   const setItemPageVisible = useAddSequenceStore(
     (state) => state.setItemPageVisible
@@ -86,18 +86,36 @@ const MyApp: React.FC = () => {
     }
   }, [user]);
 
-  // Run the configured side effects for the active workflow step whenever it changes.
+
+  // Run step-specific side effects only when entering a different step.
+  // Run side effects only when entering a different workflow step.
   useEffect(() => {
-    const ruleForCurrentStep = stepRules[currentStep];
+    if (previousStepRef.current === currentStep) return;
 
-    if (typeof ruleForCurrentStep === 'function') {
-      ruleForCurrentStep();
+    previousStepRef.current = currentStep;
+
+    switch (currentStep) {
+      case 'select-collection':
+        dumpWorkingItem();
+        break;
+
+      case 'edit-description':
+        setTitle(titlePreview);
+        break;
+
+      case 'set-price':
+        setDescription(descriptionPreview);
+        break;
     }
+  }, [
+    currentStep,
+    dumpWorkingItem,
+    setTitle,
+    titlePreview,
+    setDescription,
+    descriptionPreview,
+  ]);
 
-    console.log('User:', user); // NOTE: user is giving correct object here.
-    console.log('Current Step:', currentStep);
-    console.log('Step Rules:', ruleForCurrentStep);
-  }, [currentStep, stepRules]);
 
   return (
     <div className='mx-auto bg-primary-2 dark:bg-primary-9 relative top-[7.5vh] box-border'>
