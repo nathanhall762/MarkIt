@@ -19,7 +19,9 @@ interface StepComponents {
   [key: number]: () => JSX.Element[];
 }
 
-// Function to define rules for the app at each step. The function will conditionally set isCenterButtonEnabled to true depending on conditions met in state. i.e conditions: selectedCollection not Null -> highlight Add
+// StepConfiguration coordinates the workflow through currentStep:
+// useStepComponents() selects the UI, while useStepRules() updates
+// navigation state and applies step-specific logic.
 export const useStepRules = () => {
   const selectedCollection = useAddSequenceStore(
     (state) => state.selectedCollection

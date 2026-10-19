@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
 
   return (
     <header
-      className={`fixed top-0 z-40 h-[7.5vh] flex w-screen justify-between px-4 py-2 text-center align-middle transition-all duration-1000 lg:grid lg:grid-cols-5 lg:px-0 lg:py-2 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-ltbg1 lg:hover:bg-opacity-100 dark:bg-dkbg1`}
+      id='Header' className={`fixed top-0 z-40 h-[7.5vh] flex w-screen justify-between px-4 py-2 text-center align-middle transition-all duration-1000 lg:grid lg:grid-cols-5 lg:px-0 lg:py-2 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-primary-3 lg:hover:bg-opacity-100 dark:bg-primary-7`}
     >
       <div className='items-center justify-center align-middle lg:col-span-1 flex'>
         <h2 className='text-center text-2xl text-black transition-all duration-300 hover:text-accent dark:text-white'>
@@ -86,10 +86,10 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
       </div>
       <div className='hidden lg:col-span-1 lg:flex justify-center items-center align-middle'>
         <a href='/app' className=''>
-            <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
-              App
-            </button>
-          <Button text='Log Out' onClick={handleLogOut}/>
+          <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
+            App
+          </button>
+          <Button text='Log Out' onClick={handleLogOut} />
         </a>
       </div>
     </header>
