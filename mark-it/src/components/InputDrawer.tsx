@@ -25,7 +25,7 @@ export const InputDrawerTitle: React.FC<{ rows: number }> = ({ rows }) => {
 
   // Commit titlePreview to title when moving from step 6 to step 7
   useEffect(() => {
-    if (currentStep === 7) {
+    if (currentStep === 'review') {
       setTitle(titlePreview);
     }
   }, [currentStep, titlePreview, setTitle]);
@@ -76,7 +76,7 @@ export const InputDrawerDescription: React.FC<{ rows: number }> = ({
   // Commit descriptionPreview to description after a specific action or step transition
   // Assuming the commit should happen at step 8 or whenever you deem appropriate
   useEffect(() => {
-    if (currentStep === 8) {
+    if (currentStep === 'set-price') {
       setDescription(descriptionPreview);
     }
   }, [currentStep, descriptionPreview, setDescription]);

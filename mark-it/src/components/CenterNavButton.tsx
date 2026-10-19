@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { Icon } from '@iconify/react';
-import useAddSequenceStore, {useAuthStore} from '../ZustandStore';
+import useAddSequenceStore, { useAuthStore } from '../ZustandStore';
 import useWorkingItemSubmit from '../WorkingItemSubmit';
 import { ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from '../firebase';
+import { getNextStep } from '../WorkflowSteps';
 
 
 export default function NavButton(): React.ReactElement {
@@ -30,13 +31,13 @@ export default function NavButton(): React.ReactElement {
         console.log('webmFile', webmFile);
         // Create a storage reference
         const fileRef = storageRef(storage, `${user?.uid}/${QRCode}`);
-  
+
         // Upload the file
         const snapshot = await uploadBytes(fileRef, webmFile);
-  
+
         // After upload completes, get the download URL
         const downloadURL = await getDownloadURL(snapshot.ref);
-  
+
         console.log("File available at", downloadURL);
         // Now you can use downloadURL for displaying the image or storing it in Firestore
         setPhoto1(downloadURL);
@@ -48,22 +49,28 @@ export default function NavButton(): React.ReactElement {
     }
   };
 
+  const currentStep = useAddSequenceStore((state) => state.currentStep);
+
   const handleClick = () => {
-    if (icon === 'tabler:camera' && isCenterButtonEnabled) {
-      // Trigger file input click to open camera
+    if (!isCenterButtonEnabled) return;
+
+    if (icon === 'tabler:camera') {
       fileInputRef.current?.click();
       return;
     }
-    // Your existing handleClick logic
-    if (
-      (isCenterButtonEnabled && icon === 'tabler:arrow-right') ||
-      icon === 'tabler:plus'
-    ) {
-      setCurrentStep((prevStep) => (prevStep === 9 ? 0 : prevStep + 1));
+
+    if (icon === 'tabler:arrow-right' || icon === 'tabler:plus') {
+      const nextStep = getNextStep(currentStep);
+
+      if (nextStep) {
+        setCurrentStep(nextStep);
+      }
+
+      return;
     }
-    if (isCenterButtonEnabled && icon === 'ph:check-bold') {
+
+    if (icon === 'ph:check-bold') {
       submitWorkingItem();
-      setCurrentStep(0);
     }
   };
 
@@ -78,9 +85,8 @@ export default function NavButton(): React.ReactElement {
         ref={fileInputRef}
       />
       <button
-        className={`border rounded-2xl ${
-          isCenterButtonEnabled ? '' : 'cursor-not-allowed'
-        }`}
+        className={`border rounded-2xl ${isCenterButtonEnabled ? '' : 'cursor-not-allowed'
+          }`}
         onClick={handleClick}
         disabled={!isCenterButtonEnabled}
       >

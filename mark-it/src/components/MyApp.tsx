@@ -74,7 +74,7 @@ const MyApp: React.FC = () => {
               alert('Please login to add an item.');
             } else {
               setQRCode(qrCode);
-              setCurrentStep(2);
+              setCurrentStep('choose-action');
             }
           }
         } catch (error) {

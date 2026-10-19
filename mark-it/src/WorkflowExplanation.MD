@@ -8,5 +8,5 @@ If the item is marked rent or sell, show the item details.
 If the qr code is not 6 chars long, show a message saying that the qr code is invalid and redirect to the home page.
 
 If the qr code is not found in the database, open the app and set the Zustand state items to the following to begin the item add process:
-setCurrentStep(2)
+setCurrentStep('choose-action')
 setQRCode(qrCode)

@@ -10,14 +10,16 @@ import {
 } from './components/InputDrawer';
 import PriceSlider from './components/PriceSlider';
 import Login from './components/Login';
+import type { WorkflowStep } from './WorkflowSteps';
 
 // Import the Zustand store
 import useAddSequenceStore, { useAuthStore } from './ZustandStore';
 import CardList from './components/CardList';
 
-interface StepComponents {
-  [key: number]: () => JSX.Element[];
-}
+type StepComponents = Record<
+  WorkflowStep,
+  () => JSX.Element[]
+>;
 
 // StepConfiguration coordinates the workflow through currentStep:
 // useStepComponents() selects the UI, while useStepRules() updates
@@ -54,8 +56,8 @@ export const useStepRules = () => {
   const user = useAuthStore((state) => state.user);
 
   // Define the rules for each step
-  const stepRules: { [key: number]: () => void } = {
-    0: () => {
+  const stepRules: Record<WorkflowStep, () => void> = {
+    'select-collection': () => {
       dumpWorkingItem();
       setCenterButtonIcon('tabler:plus');
       setSelectedCollection(selectedCollection);
@@ -65,7 +67,7 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(true);
       }
     },
-    1: () => {
+    'scan-qr': () => {
       setLeftButtonIcon('ep:back');
       setCenterButtonIcon('tabler:arrow-right');
       if (QRCode !== '') {
@@ -74,7 +76,7 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    2: () => {
+    'choose-action': () => {
       setLeftButtonIcon('ep:back');
       if (selectedCollection && QRCode !== '' && actionType) {
         setIsCenterButtonEnabled(true);
@@ -84,7 +86,7 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    3: () => {
+    'take-photo': () => {
       setIsCenterButtonEnabled(true);
       if (selectedCollection && QRCode !== '' && actionType && photo1) {
         setCenterButtonIcon('tabler:arrow-right');
@@ -93,7 +95,7 @@ export const useStepRules = () => {
         setCenterButtonIcon('tabler:camera');
       }
     },
-    4: () => {
+    'edit-title': () => {
       setIsCenterButtonEnabled(true);
       if (
         selectedCollection &&
@@ -107,7 +109,7 @@ export const useStepRules = () => {
         setCenterButtonIcon('tabler:camera');
       }
     },
-    5: () => {
+    'edit-description': () => {
       setTitle(titlePreview);
       if (
         selectedCollection &&
@@ -122,7 +124,7 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    6: () => {
+    'set-price': () => {
       setDescription(descriptionPreview);
       if (
         selectedCollection &&
@@ -137,7 +139,7 @@ export const useStepRules = () => {
         setIsCenterButtonEnabled(false);
       }
     },
-    7: () => {
+    'review': () => {
       setCenterButtonIcon('ph:check-bold');
       if (
         selectedCollection &&
@@ -174,13 +176,13 @@ export const useStepComponents = () => {
   );
 
   const stepComponents: StepComponents = {
-    0: () =>
+    'select-collection': () =>
       user && user.uid // TODO: can hacker enter uid as state and bypass login?
         ? [<DropDownSelector />, <CardList userId={user.uid} />]
         : [<Login />],
-    1: () => [<QRScannerViewport />],
-    2: () => [<DropDownSelector />, <ActionTypeSelector />],
-    3: () => [
+    'scan-qr': () => [<QRScannerViewport />],
+    'choose-action': () => [<DropDownSelector />, <ActionTypeSelector />],
+    'take-photo': () => [
       <ItemCard
         actionType={actionType}
         itemDetails={{
@@ -200,7 +202,7 @@ export const useStepComponents = () => {
       />,
       <CameraDrawer />,
     ],
-    4: () => [
+    'edit-title': () => [
       <ItemPage
       actionType={actionType}
       itemDetails={{
@@ -220,7 +222,7 @@ export const useStepComponents = () => {
       />,
       <InputDrawerTitle rows={2} />,
     ],
-    5: () => [
+    'edit-description': () => [
       <ItemPage
       actionType={actionType}
       itemDetails={{
@@ -240,7 +242,7 @@ export const useStepComponents = () => {
       />,
       <InputDrawerDescription rows={4} />,
     ],
-    6: () => [
+    'set-price': () => [
       <ItemPage
       actionType={actionType}
       itemDetails={{
@@ -265,7 +267,7 @@ export const useStepComponents = () => {
         step={5}
       />,
     ],
-    7: () => [
+    'review': () => [
       <ItemPage
       actionType={actionType}
       itemDetails={{

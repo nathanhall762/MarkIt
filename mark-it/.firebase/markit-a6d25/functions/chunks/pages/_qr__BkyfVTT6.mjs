@@ -128,7 +128,7 @@ const useAuthStore = create()(
   )
 );
 const useAddSequenceStore = create((set) => ({
-  currentStep: 0,
+  currentStep: 'select-collection',
   setCurrentStep: (arg) => set((state) => ({
     currentStep: typeof arg === "function" ? arg(state.currentStep) : arg
   })),

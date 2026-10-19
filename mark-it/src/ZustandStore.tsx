@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { db } from './firebase';
 import { collection, query, getDocs } from 'firebase/firestore';
+import type { WorkflowStep } from './WorkflowSteps';
 
 export interface Collection {
   id: string;
@@ -52,8 +53,8 @@ export const useAuthStore = create<AuthState>()(
 );
 
 interface AddSequenceState {
-  currentStep: number;
-  setCurrentStep: (arg: number | ((prevStep: number) => number)) => void;
+  currentStep: WorkflowStep;
+  setCurrentStep: (step: WorkflowStep) => void;
   isCenterButtonEnabled: boolean;
   setIsCenterButtonEnabled: (isCenterButtonEnabled: boolean) => void;
   centerButtonIcon: string;
@@ -96,11 +97,8 @@ interface AddSequenceState {
 }
 
 const useAddSequenceStore = create<AddSequenceState>((set) => ({
-  currentStep: 0,
-  setCurrentStep: (arg) =>
-    set((state) => ({
-      currentStep: typeof arg === 'function' ? arg(state.currentStep) : arg,
-    })),
+  currentStep: 'select-collection',
+  setCurrentStep: (step) => set({ currentStep: step }),
   isCenterButtonEnabled: true,
   setIsCenterButtonEnabled: (isCenterButtonEnabled: boolean) =>
     set({ isCenterButtonEnabled }),
