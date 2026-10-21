@@ -1,5 +1,5 @@
 ---
-import Header from '../components/Header';
+import Header from "../components/Header";
 
 interface Props {
   title: string;
@@ -8,54 +8,36 @@ interface Props {
 
 const { title, metaDescription } = Astro.props;
 
-const websiteName = 'MarkItStorage';
-const navs = [{ link: '/shop', name: 'Shop' }];
-const cta = 'Start Marking!';
+const websiteName = "MarkItStorage";
+const navs = [{ link: "/shop", name: "Shop" }];
+const cta = "Start Marking!";
 ---
 
 <!doctype html>
-<html
-  lang='en'
-  class='bg-black font-sans font-light text-white'>
+<html lang="en" class="bg-black font-sans font-light text-white">
   <head>
-    <meta charset='UTF-8' />
-    <meta
-      name='description'
-      content={metaDescription}
-    />
-    <meta
-      name='viewport'
-      content='width=device-width'
-    />
-    <link
-      rel='icon'
-      type='image/svg+xml'
-      href='/favicon.svg'
-    />
-    <meta
-      name='generator'
-      content={Astro.generator}
-    />
+    <meta charset="UTF-8" />
+    <meta name="description" content={metaDescription} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
     <script>
       if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add("dark");
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark");
       }
-      localStorage.theme = 'light';
-      localStorage.theme = 'dark';
-      localStorage.removeItem('theme');
     </script>
     <title>{title ? `${title} - ${websiteName}` : websiteName}</title>
   </head>
-  <body class='bg-ltbg2 dark:bg-dkbg2'>
+  <body class="bg-ltbg2 dark:bg-dkbg2">
     <Header
       title={websiteName}
-      navs={navs.filter((nav) => nav.link !== '/')}
+      navs={navs.filter((nav) => nav.link !== "/")}
       cta={cta}
       client:load
     />
@@ -75,6 +57,10 @@ const cta = 'Start Marking!';
         rgb(var(--accent-light)) 30%,
         white 60%
       );
+      --primary-hue: 180;
+      --primary-saturation: 92%;
+      --neutral-hue: 240;
+      --neutral-saturation: 5%;
     }
     html {
       font-family: system-ui, sans-serif;

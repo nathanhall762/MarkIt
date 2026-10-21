@@ -1,24 +1,33 @@
+
 import { Icon } from '@iconify/react';
 import useAddSequenceStore from '../ZustandStore';
+import { getPreviousStep } from '../WorkflowSteps';
 
-export default function NavButton(): React.ReactElement {
-  const icon = useAddSequenceStore((state) => state.leftButtonIcon);
-  const setCurrentStep = useAddSequenceStore((state) => state.setCurrentStep);
+export default function LNavButton(): React.ReactElement {
+    const currentStep = useAddSequenceStore((state) => state.currentStep);
+    const setCurrentStep = useAddSequenceStore((state) => state.setCurrentStep);
 
-  const onClick = () => {
-    if (icon === 'ep:back') {
-      setCurrentStep((prevStep) => prevStep - 1);
-    }
-  };
-  return (
-    <button onClick={onClick}>
-      {icon && (
-        <Icon
-          icon={icon}
-          height={46}
-          width={52}
-        />
-      )}
-    </button>
-  );
+    const previousStep = getPreviousStep(currentStep);
+
+    const handleClick = () => {
+        if (previousStep) {
+            setCurrentStep(previousStep);
+        }
+    };
+
+    if (!previousStep) return <></>;
+
+    return (
+        <button
+            id="LNavButton"
+            className='border rounded-2xl'
+            onClick={handleClick}
+        >
+            <Icon
+                icon="tabler:arrow-left"
+                height={76}
+                width={112}
+            />
+        </button>
+    );
 }

@@ -93,10 +93,10 @@ const DropdownSelector = () => {
 
   return (
     <div
-      className='relative mb-4'
+      id='DropDownSelector' className='relative mb-4'
       ref={dropdownRef}>
       <div
-        className='border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer'
+        className='border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer bg-primary-2 dark:bg-primary-7'
         onClick={toggleDropdown}>
         <div className='flex overflow-clip'>
           <h3 className='px-2 overflow-clip'>
