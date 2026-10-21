@@ -1,7 +1,8 @@
 ---
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import { ViewTransitions, fade } from 'astro:transitions';
+import "../index.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { ViewTransitions, fade } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -10,66 +11,51 @@ interface Props {
 
 const { title, metaDescription } = Astro.props;
 
-const websiteName = 'MarkItStorage';
-const phone = '(---) --------';
-const address = '---- ---- --, -----, -- -----';
-const navs = [{ link: '/shop', name: 'Shop' }];
+const websiteName = "MarkItStorage";
+const phone = "(---) --------";
+const address = "---- ---- --, -----, -- -----";
+const navs = [{ link: "/shop", name: "Shop" }];
 const socials = [
-  { link: 'https://www.instagram.com/', type: 'instagram' },
-  { link: 'https://www.facebook.com/', type: 'facebook' },
+  { link: "https://www.instagram.com/", type: "instagram" },
+  { link: "https://www.facebook.com/", type: "facebook" },
 ];
-const cta = 'Start Marking!';
+const cta = "Start Marking!";
 ---
 
 <!doctype html>
-<html
-  lang='en'
-  class='bg-black font-sans font-light text-white'>
+<html lang="en" class="bg-black font-sans font-light text-white">
   <head>
-    <meta charset='UTF-8' />
-    <meta
-      name='description'
-      content={metaDescription}
-    />
-    <meta
-      name='viewport'
-      content='width=device-width'
-    />
-    <link
-      rel='icon'
-      type='image/svg+xml'
-      href='/favicon.svg'
-    />
-    <meta
-      name='generator'
-      content={Astro.generator}
-    />
+    <meta charset="UTF-8" />
+    <meta name="description" content={metaDescription} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
     <script>
       if (
-        localStorage.theme === 'dark' ||
-        (!('theme' in localStorage) &&
-          window.matchMedia('(prefers-color-scheme: dark)').matches)
+        localStorage.theme === "dark" ||
+        (!("theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
       ) {
-        document.documentElement.classList.add('dark');
+        document.documentElement.classList.add("dark");
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark");
       }
-      localStorage.theme = 'light';
-      localStorage.theme = 'dark';
-      localStorage.removeItem('theme');
+      localStorage.theme = "light";
+      localStorage.theme = "dark";
+      localStorage.removeItem("theme");
     </script>
     <title>{title ? `${title} - ${websiteName}` : websiteName}</title>
     <ViewTransitions />
   </head>
-  <body class='bg-ltbg2 dark:bg-dkbg2'>
+  <body class="bg-ltbg2 dark:bg-dkbg2">
     <Header
       title={websiteName}
-      navs={navs.filter((nav) => nav.link !== '/')}
+      navs={navs.filter((nav) => nav.link !== "/")}
       cta={cta}
       client:load
     />
     <main>
-      <slot transition:animate={fade({ duration: '0.7s' })} />
+      <slot transition:animate={fade({ duration: "0.7s" })} />
     </main>
     <Footer
       cta={cta}
@@ -85,7 +71,8 @@ const cta = 'Start Marking!';
 
 <!-- custom animation keyframes and other global stuffs -->
 <style is:global>
-  @tailwind base;
+  @reference "../index.css";
+  ``
 
   @layer base {
     @keyframes fadeInUp {

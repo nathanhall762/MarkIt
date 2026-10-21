@@ -1,0 +1,97 @@
+
+@import "tailwindcss";
+
+/* Shared design tokens */
+:root {
+  --accent: 136, 58, 234;
+  --accent-light: 224, 204, 250;
+  --accent-dark: 49, 10, 101;
+  --accent-gradient: linear-gradient(
+    45deg,
+    rgb(var(--accent)),
+    rgb(var(--accent-light)) 30%,
+    white 60%
+  );
+
+  --primary-hue: 180;
+  --primary-saturation: 92%;
+  --neutral-hue: 240;
+  --neutral-saturation: 5%;
+}
+
+/* Tailwind theme: generates utility classes */
+@theme {
+  --font-sans: Calibre, sans-serif;
+  --font-serif: Merriweather, serif;
+
+  --color-secondary: #002642;
+  --color-tertiary: #67eb3b;
+  --color-accent: #e59500;
+
+  --color-dkbg1: #0f0f0f;
+  --color-dkbg2: #1f1f1f;
+  --color-dkbg3: #2f2f2f;
+
+  --color-ltbg1: #f5f5f5;
+  --color-ltbg2: #e5e5e5;
+
+  --color-black2: hsl(0, 0%, 12%);
+  --color-white2: hsl(0, 0%, 90%);
+
+  --height-3\/4vh: 75vh;
+  --transition-duration-2000: 2000ms;
+}
+
+/* Color scales derived from shared hue variables */
+@theme inline {
+  --color-neutral-1: hsl(var(--neutral-hue), var(--neutral-saturation), 92%);
+  --color-neutral-2: hsl(var(--neutral-hue), var(--neutral-saturation), 88%);
+  --color-neutral-3: hsl(var(--neutral-hue), var(--neutral-saturation), 78%);
+  --color-neutral-4: hsl(var(--neutral-hue), var(--neutral-saturation), 67%);
+  --color-neutral-5: hsl(var(--neutral-hue), var(--neutral-saturation), 46%);
+  --color-neutral-6: hsl(var(--neutral-hue), var(--neutral-saturation), 31%);
+  --color-neutral-7: hsl(var(--neutral-hue), var(--neutral-saturation), 20%);
+  --color-neutral-8: hsl(var(--neutral-hue), var(--neutral-saturation), 12%);
+  --color-neutral-9: hsl(var(--neutral-hue), var(--neutral-saturation), 8%);
+
+  --color-primary-1: hsl(var(--primary-hue), var(--primary-saturation), 92%);
+  --color-primary-2: hsl(var(--primary-hue), var(--primary-saturation), 88%);
+  --color-primary-3: hsl(var(--primary-hue), var(--primary-saturation), 78%);
+  --color-primary-4: hsl(var(--primary-hue), var(--primary-saturation), 67%);
+  --color-primary-5: hsl(var(--primary-hue), var(--primary-saturation), 46%);
+  --color-primary-6: hsl(var(--primary-hue), var(--primary-saturation), 31%);
+  --color-primary-7: hsl(var(--primary-hue), var(--primary-saturation), 20%);
+  --color-primary-8: hsl(var(--primary-hue), var(--primary-saturation), 12%);
+  --color-primary-9: hsl(var(--primary-hue), var(--primary-saturation), 8%);
+}
+
+/* Global base styles */
+html {
+  font-family: system-ui, sans-serif;
+  background: #13151a;
+  background-size: 224px;
+}
+
+body {
+  @apply h-screen;
+}
+
+textarea {
+  color: black;
+}
+
+code {
+  font-family:
+    Menlo, Monaco, "Lucida Console", "Liberation Mono",
+    "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New",
+    monospace;
+}
+
+input {
+  @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}

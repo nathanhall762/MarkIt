@@ -1,4 +1,5 @@
 ---
+import "../index.css";
 import Header from "../components/Header";
 
 interface Props {
@@ -43,55 +44,5 @@ const cta = "Start Marking!";
     />
     <slot />
   </body>
-  <style is:global>
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-    :root {
-      --accent: 136, 58, 234;
-      --accent-light: 224, 204, 250;
-      --accent-dark: 49, 10, 101;
-      --accent-gradient: linear-gradient(
-        45deg,
-        rgb(var(--accent)),
-        rgb(var(--accent-light)) 30%,
-        white 60%
-      );
-      --primary-hue: 180;
-      --primary-saturation: 92%;
-      --neutral-hue: 240;
-      --neutral-saturation: 5%;
-    }
-    html {
-      font-family: system-ui, sans-serif;
-      background: #13151a;
-      background-size: 224px;
-    }
-    textarea {
-      color: black;
-    }
-    code {
-      font-family:
-        Menlo,
-        Monaco,
-        Lucida Console,
-        Liberation Mono,
-        DejaVu Sans Mono,
-        Bitstream Vera Sans Mono,
-        Courier New,
-        monospace;
-    }
-    ::-webkit-scrollbar {
-      width: 12px; /* Width of the scrollbar */
-      height: 12px; /* Height of the scrollbar */
-    }
-    @layer base {
-      body {
-        @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1 h-screen; /* Light and dark text colors */
-      }
-      input {
-        @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1; /* Light and dark text colors */
-      }
-    }
-  </style>
+
 </html>
