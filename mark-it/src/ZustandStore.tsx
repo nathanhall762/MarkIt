@@ -96,7 +96,9 @@ interface AddSequenceState {
   setPriceRange: (priceRange: number[]) => void;
 }
 
-const useAddSequenceStore = create<AddSequenceState>((set) => ({
+const useAddSequenceStore = create<AddSequenceState>()(
+  persist(
+    (set, get) => ({
   currentStep: 'select-collection',
   setCurrentStep: (step) => set({ currentStep: step }),
   isCenterButtonEnabled: true,
@@ -126,10 +128,9 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   initializeCollections: async (uid: string) => {
     // This function should be called to initialize collections
     const fetchedCollections = await getUserCollections(uid);
-    if (fetchedCollections.length > 0) {
-      // Automatically select the first collection as the default selected collection
-      set({ selectedCollection: fetchedCollections[0].id });
-    }
+    if (fetchedCollections.length > 0 && !get().selectedCollection) {
+  set({ selectedCollection: fetchedCollections[0].id });
+}
   },
   QRCode: '',
   setQRCode: (QRCode: string) => set({ QRCode }),
@@ -160,6 +161,25 @@ const useAddSequenceStore = create<AddSequenceState>((set) => ({
   setDescription: (description: string) => set({ description }),
   priceRange: [0, 500],
   setPriceRange: (priceRange: number[]) => set({ priceRange }),
-}));
+}),
+    {
+      name: 'markit-workflow-storage',
+      partialize: (state) => ({
+        currentStep: state.currentStep,
+        selectedCollection: state.selectedCollection,
+        QRCode: state.QRCode,
+        actionType: state.actionType,
+        photo1: state.photo1,
+        photo2: state.photo2,
+        photo3: state.photo3,
+        title: state.title,
+        description: state.description,
+        titlePreview: state.titlePreview,
+        descriptionPreview: state.descriptionPreview,
+        priceRange: state.priceRange,
+      }),
+    }
+  )
+);
 
 export default useAddSequenceStore;

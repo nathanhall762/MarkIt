@@ -1,83 +1,159 @@
-
 @import "tailwindcss";
 
-/* Shared design tokens */
+/*
+ * Brand primitives
+ * Replace these example values with MarkIt's chosen brand colors.
+ * These remain stable across light and dark themes.
+ */
 :root {
-  --accent: 136, 58, 234;
-  --accent-light: 224, 204, 250;
-  --accent-dark: 49, 10, 101;
-  --accent-gradient: linear-gradient(
-    45deg,
-    rgb(var(--accent)),
-    rgb(var(--accent-light)) 30%,
-    white 60%
-  );
+  --brand-primary: #9c26e6;
+  --brand-secondary: #334155;
+  --brand-accent: #e59500;
 
-  --primary-hue: 180;
-  --primary-saturation: 92%;
-  --neutral-hue: 240;
-  --neutral-saturation: 5%;
+  /*
+   * Neutral primitives
+   * Shared anchors for text, backgrounds, borders, and icons.
+   */
+  --neutral-dark: #171717;
+  --neutral-light: #f5f5f5;
+
+  /*
+   * Status primitives
+   * Independent of the brand, but selected to work alongside it.
+   */
+  --status-success: #15803d;
+  --status-warning: #a16207;
+  --status-danger: #b91c1c;
+
+  /*
+   * Light theme roles
+   */
+  color-scheme: light;
+
+  --page-background: #f8fafc;
+  --surface-background: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --surface-brand: color-mix(in srgb,
+      var(--brand-primary) 5%,
+      var(--page-background));
+  --surface-selected: color-mix(in srgb,
+      var(--brand-primary) 14%,
+      var(--page-background));
+  --surface-secondary: color-mix(in srgb,
+      var(--brand-secondary) 5%,
+      var(--page-background));
+  --text-primary: var(--neutral-dark);
+  --text-secondary: #52525b;
+  --text-disabled: #a1a1aa;
+
+  --border-color: #e4e4e7;
+
+  --action-primary: var(--brand-primary);
+  --action-primary-hover: color-mix(in srgb,
+      var(--brand-primary) 85%,
+      black);
+  --on-action-primary: #ffffff;
+
+  --success-background: #f0fdf4;
+  --warning-background: #fffbeb;
+  --danger-background: #fef2f2;
 }
 
-/* Tailwind theme: generates utility classes */
-@theme {
-  --font-sans: Calibre, sans-serif;
-  --font-serif: Merriweather, serif;
+/*
+ * Dark theme roles
+ * Brand primitives stay the same; UI roles adapt.
+ */
+.dark {
+  color-scheme: dark;
 
-  --color-secondary: #002642;
-  --color-tertiary: #67eb3b;
-  --color-accent: #e59500;
+  --page-background: #111315;
+  --surface-background: #1c1f22;
+  --surface-subtle: #25292d;
+  --surface-brand: color-mix(in srgb,
+      var(--brand-primary) 12%,
+      var(--page-background));
+  --surface-selected: color-mix(in srgb,
+      var(--brand-primary) 24%,
+      var(--page-background));
+  --surface-secondary: color-mix(in srgb,
+      var(--brand-secondary) 12%,
+      var(--page-background));
 
-  --color-dkbg1: #0f0f0f;
-  --color-dkbg2: #1f1f1f;
-  --color-dkbg3: #2f2f2f;
+  --text-primary: #f5f5f5;
+  --text-secondary: #b4b4bc;
+  --text-disabled: #71717a;
 
-  --color-ltbg1: #f5f5f5;
-  --color-ltbg2: #e5e5e5;
+  --border-color: #383b40;
 
-  --color-black2: hsl(0, 0%, 12%);
-  --color-white2: hsl(0, 0%, 90%);
+  --action-primary: var(--brand-primary);
+  --action-primary-hover: color-mix(in srgb,
+      var(--brand-primary) 85%,
+      white);
+  --on-action-primary: #ffffff;
 
-  --height-3\/4vh: 75vh;
-  --transition-duration-2000: 2000ms;
+  --success-background: #14291b;
+  --warning-background: #302512;
+  --danger-background: #321b1b;
 }
 
-/* Color scales derived from shared hue variables */
+/*
+ * Tailwind utilities
+ */
 @theme inline {
-  --color-neutral-1: hsl(var(--neutral-hue), var(--neutral-saturation), 92%);
-  --color-neutral-2: hsl(var(--neutral-hue), var(--neutral-saturation), 88%);
-  --color-neutral-3: hsl(var(--neutral-hue), var(--neutral-saturation), 78%);
-  --color-neutral-4: hsl(var(--neutral-hue), var(--neutral-saturation), 67%);
-  --color-neutral-5: hsl(var(--neutral-hue), var(--neutral-saturation), 46%);
-  --color-neutral-6: hsl(var(--neutral-hue), var(--neutral-saturation), 31%);
-  --color-neutral-7: hsl(var(--neutral-hue), var(--neutral-saturation), 20%);
-  --color-neutral-8: hsl(var(--neutral-hue), var(--neutral-saturation), 12%);
-  --color-neutral-9: hsl(var(--neutral-hue), var(--neutral-saturation), 8%);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
 
-  --color-primary-1: hsl(var(--primary-hue), var(--primary-saturation), 92%);
-  --color-primary-2: hsl(var(--primary-hue), var(--primary-saturation), 88%);
-  --color-primary-3: hsl(var(--primary-hue), var(--primary-saturation), 78%);
-  --color-primary-4: hsl(var(--primary-hue), var(--primary-saturation), 67%);
-  --color-primary-5: hsl(var(--primary-hue), var(--primary-saturation), 46%);
-  --color-primary-6: hsl(var(--primary-hue), var(--primary-saturation), 31%);
-  --color-primary-7: hsl(var(--primary-hue), var(--primary-saturation), 20%);
-  --color-primary-8: hsl(var(--primary-hue), var(--primary-saturation), 12%);
-  --color-primary-9: hsl(var(--primary-hue), var(--primary-saturation), 8%);
+  --color-neutral-dark: var(--neutral-dark);
+  --color-neutral-light: var(--neutral-light);
+
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-danger: var(--status-danger);
+
+  --color-page: var(--page-background);
+  --color-surface: var(--surface-background);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-brand: var(--surface-brand);
+  --color-surface-selected: var(--surface-selected);
+  --color-surface-secondary: var(--surface-secondary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+
+  --color-border: var(--border-color);
+
+  --color-action-primary: var(--action-primary);
+  --color-action-primary-hover: var(--action-primary-hover);
+  --color-on-action-primary: var(--on-action-primary);
+
+  --color-success-background: var(--success-background);
+  --color-warning-background: var(--warning-background);
+  --color-danger-background: var(--danger-background);
 }
 
-/* Global base styles */
+/*
+ * Global base styles
+ */
 html {
-  font-family: system-ui, sans-serif;
-  background: #13151a;
-  background-size: 224px;
+  font-family: Calibre, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--page-background);
 }
 
 body {
-  @apply h-screen;
+  min-height: 100vh;
+  background-color: var(--page-background);
+  color: var(--text-primary);
 }
 
-textarea {
-  color: black;
+input,
+textarea,
+select {
+  color: var(--text-primary);
+  background-color: var(--surface-background);
+  border-color: var(--border-color);
 }
 
 code {
@@ -85,10 +161,6 @@ code {
     Menlo, Monaco, "Lucida Console", "Liberation Mono",
     "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New",
     monospace;
-}
-
-input {
-  @apply text-black dark:text-white bg-ltbg1 dark:bg-dkbg1;
 }
 
 ::-webkit-scrollbar {

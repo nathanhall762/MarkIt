@@ -93,10 +93,10 @@ const DropdownSelector = () => {
 
   return (
     <div
-      id='DropDownSelector' className='relative mb-4'
+      id='DropDownSelector' className='relative mb-4 mt-8'
       ref={dropdownRef}>
       <div
-        className='border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer bg-primary-2 dark:bg-primary-7'
+        className='bg-surface-subtle border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer'
         onClick={toggleDropdown}>
         <div className='flex overflow-clip'>
           <h3 className='px-2 overflow-clip'>
@@ -112,19 +112,19 @@ const DropdownSelector = () => {
         </div>
       </div>
       {isDropdownVisible && (
-        <div className='absolute z-10 w-72 border mt-1 rounded-md bg-white'>
+        <div className='absolute z-10 w-72 border mt-1 rounded-md bg-surface-subtle'>
           {collections.map((collection) => (
             <div
               key={collection.id} // Use collection.id instead of collection.ownerId
               onClick={() => handleSelectCollection(collection.id)}
-              className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer hover:bg-ltbg2 dark:hover:bg-dkbg2'>
+              className='p-2 text-black dark:text-white cursor-pointer dark:hover:bg-dkbg2'>
               {collection.collectionName} - <span className='opacity-50'>{selectedCollection}</span>
             </div>
           ))}
 
           <div
             onClick={handleAddCollection}
-            className='p-2 bg-ltbg1 dark:bg-dkbg1 text-black dark:text-white cursor-pointer border-t hover:bg-ltbg2 dark:hover:bg-dkbg2'>
+            className='p-2 text-black dark:text-white cursor-pointer border-t dark:hover:bg-dkbg2'>
             Add Collection
           </div>
         </div>

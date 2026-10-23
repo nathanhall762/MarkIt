@@ -49,7 +49,7 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
 
 
   return (
-    <div className='flex flex-wrap w-screen flex-row justify-center gap-4'>
+    <div id='CardList' className='flex flex-wrap w-full flex-row justify-center gap-4'>
       {items.map((item) =>
         isListView ? (
           <ListItem
@@ -61,11 +61,12 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
             key={item.itemDetails.QRCode}
             {...item} // Spread item props
           />
+          
         )
       )}
       <button
         onClick={() => setIsListView(!isListView)}
-        className='fixed bottom-[13vh] right-2 p-4 border bg-ltbg2 dark:bg-dkbg2 text-white rounded-full shadow-lg'>
+        className='absolute bottom-[13vh] right-2 p-4 border bg-surface-subtle text-white rounded-full shadow-lg'>
         {isListView ? (
           <svg
             xmlns='http://www.w3.org/2000/svg'

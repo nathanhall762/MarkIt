@@ -17,7 +17,7 @@ const ItemCard: React.FC<Item> = ({
   };
   
   return (
-    <div className="flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative shadow-xl" onClick={handleClick}>
+    <div className="bg-surface-subtle flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative shadow-xl" onClick={handleClick}>
       <div className="w-full rounded-t-3xl">
         <img
           className="w-full aspect-square object-cover rounded-t-3xl"
@@ -26,12 +26,12 @@ const ItemCard: React.FC<Item> = ({
           loading='lazy'
         />
       </div>
-      <div className="py-2 border bg-dkbg3">{itemDetails.title}</div>
-      <div className="border flex flex-row bg-dkbg3 justify-between rounded-b-3xl">
-        <div className="border py-2 text-center w-1/3 rounded-bl-3xl">
+      <div className="py-2 border-y">{itemDetails.description}</div>
+      <div className=" flex flex-row justify-between rounded-b-3xl">
+        <div className="border-r py-2 text-center w-1/3 rounded-bl-3xl">
           ${typeof itemDetails.priceRange === 'object' ? itemDetails.priceRange.max : itemDetails.priceRange}
         </div>
-        <div className="border py-2 action-type text-center w-2/3 rounded-br-3xl">
+        <div className=" py-2 action-type text-center w-2/3 rounded-br-3xl">
           {itemDetails.title}
         </div>
       </div>

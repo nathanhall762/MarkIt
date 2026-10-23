@@ -5,16 +5,19 @@ const CameraDrawer: React.FC = () => {
   const photo2 = useAddSequenceStore((state) => state.photo2);
   const photo3 = useAddSequenceStore((state) => state.photo3);
   return (
-    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-ltbg1 dark:bg-dkbg1 fixed bottom-[12vh] py-8 border-t flex flex-col'>
-      <h2 className='mb-2'>Take Photo</h2>
-      <div className='mx-8 rounded-full flex justify-center gap-4'>
-        <div
-          className={`h-8 w-8 rounded-full border ${
-            photo1 ? 'bg-black' : 'bg-white'
-          }`}></div>
-        {/* <div className={`h-8 w-8 rounded-full border ${photo2 ? 'bg-black' : 'bg-white'}`}></div>
-				<div className={`h-8 w-8 rounded-full border ${photo3 ? 'bg-black' : 'bg-white'}`}></div> */}
-      </div>
+    <div
+      id="InputDrawer"
+      className="absolute bottom-0 left-0 flex h-fit w-full flex-col
+    rounded-t-3xl border-t border-border text-center bg-brand-primary
+    pb-[12vh]"
+    >
+      <div className='flex flex-col justify-center items-center z-40 gap-4 my-8'>
+        <h2 className='mb-2'>Take Photo</h2>
+        <div className='mx-8 rounded-full flex justify-center gap-4'>
+          <div
+            className={`h-8 w-8 rounded-full border ${photo1 ? 'bg-success' : 'bg-danger'
+              }`}></div>
+        </div></div>
     </div>
   );
 };

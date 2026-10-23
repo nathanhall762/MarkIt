@@ -69,14 +69,14 @@ export default function CenterNavButton(): React.ReactElement | null {
 
             <button
                 id="CenterNavButton"
-                className="border rounded-2xl"
+                className="bg-action-primary hover:bg-action_primary rounded-2xl"
                 onClick={handleClick}
             >
                 <Icon
                     icon={isAddingItem ? 'tabler:plus' : 'tabler:camera'}
                     height={76}
                     width={112}
-                    color="green"
+                    //color="green"
                 />
             </button>
         </>

@@ -39,14 +39,14 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
 
   return (
     <header
-      id='Header' className={`fixed top-0 z-40 h-[7.5vh] flex w-screen justify-between px-4 py-2 text-center align-middle transition-all duration-1000 lg:grid lg:grid-cols-5 lg:px-0 lg:py-2 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-primary-3 lg:hover:bg-opacity-100 dark:bg-primary-7`}
+      id='Header' className={`absolute top-0 z-40 @container h-[7.5vh] flex w-full justify-between px-4 py-2 text-center align-middle transition-all duration-1000 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-surface-brand @lg:hover:bg-opacity-100`}
     >
-      <div className='items-center justify-center align-middle lg:col-span-1 flex'>
+      <div className='items-center justify-center align-middle @lg:col-span-1 flex'>
         <h2 className='text-center text-2xl text-black transition-all duration-300 hover:text-accent dark:text-white'>
           <a href='/' className='align-middle'>{title}</a>
         </h2>
       </div>
-      <nav className='hidden items-center justify-center gap-16 align-middle lg:col-span-3 lg:flex'>
+      <nav className='hidden items-center justify-center gap-16 align-middle @@lg:col-span-3 @@lg:flex'>
         {navs.map((nav) => (
           <a
             className='text-bold text-base text-black transition duration-300 ease-in-out hover:text-accent dark:text-white'
@@ -59,13 +59,13 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
       </nav>
       <div
         onClick={toggleNav}
-        className={`z-50 flex w-10 cursor-pointer items-center justify-center text-2xl text-black transition-transform duration-300 lg:hidden dark:text-white ${isNavOpen ? 'rotate-180 opacity-100' : 'rotate-0 opacity-50'}`}
+        className={`z-50 flex w-10 cursor-pointer items-center justify-center text-2xl text-black transition-transform duration-300 @@lg:hidden dark:text-white ${isNavOpen ? 'rotate-180 opacity-100' : 'rotate-0 opacity-50'}`}
       >
         {isNavOpen ? <Icon icon={closeIcon} /> : <Icon icon={menuIcon} />}
       </div>
 
       <div
-        className={`absolute left-0 top-full z-50 w-full transform bg-white shadow-md lg:hidden ${isNavOpen ? 'scale-y-100' : 'scale-y-0'} origin-top transition-transform duration-300 ease-in-out`}
+        className={`absolute left-0 top-full z-50 w-full transform bg-surface-brand shadow-md @lg:hidden ${isNavOpen ? 'scale-y-100' : 'scale-y-0'} origin-top transition-transform duration-300 ease-in-out`}
       >
         <nav className='flex flex-col dark:bg-dkbg1'>
           {navs.map((nav, index) => (
@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
           </a>
         </nav>
       </div>
-      <div className='hidden lg:col-span-1 lg:flex justify-center items-center align-middle'>
+      <div className='hidden @@lg:col-span-1 @@lg:flex justify-center items-center align-middle'>
         <a href='/app' className=''>
           <button className='transform rounded-xl bg-tertiary px-4 py-2 text-lg transition duration-300 ease-in-out hover:scale-110 hover:bg-accent'>
             App

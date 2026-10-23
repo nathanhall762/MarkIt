@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ItemPage from './ItemPage';
+import ItemPage from './ItemPage.tsx';
 import { Icon } from '@iconify/react';
-import useAddSequenceStore from '../ZustandStore';
+import useAddSequenceStore from '../ZustandStore.tsx';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { db } from '../firebase.ts';
 import type { Item } from '../types/items.ts';
 
 const ItemPageContainer: React.FC = () => {
@@ -53,13 +53,13 @@ const ItemPageContainer: React.FC = () => {
     fetchItemDetails();
   }, [itemID]); // Re-fetch when itemID changes
   return (
-    <div className='fixed z-50 h-[80.5vh] w-screen top-[7.5vh] bg-ltbg2 dark:bg-dkbg1 flex items-center justify-center'>
+    <div className='absolute z-50 h-[80.5vh] w-full top-[7.5vh] bg-surface-subtle flex items-center justify-center'>
       {/* Add your other app elements here */}
       <button
         onClick={handleClose}
-        className='text-red-500 md:opacity-100 lg:opacity-50 border hover:opacity-100 hover:text-red-700 w-fit bg-ltbg1 dark:bg-dkbg1 p-2 rounded-full absolute right-0 m-2'>
+        className='text-red-500 md:opacity-100 lg:opacity-50 border hover:opacity-100 hover:text-red-700 w-fit bg-surface-subtle p-2 rounded-full absolute left-0 bottom-1 m-2 z-50'>
         <Icon
-          icon='oi:x'
+          icon='tabler:arrow-left'
           height={24}
           width={24}
         />

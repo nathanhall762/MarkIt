@@ -1,3 +1,4 @@
+
 ---
 import "../index.css";
 import Header from "../components/Header";
@@ -15,13 +16,14 @@ const cta = "Start Marking!";
 ---
 
 <!doctype html>
-<html lang="en" class="bg-black font-sans font-light text-white">
+<html lang="en" class="font-sans font-light text-white">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={metaDescription} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+
     <script>
       if (
         localStorage.theme === "dark" ||
@@ -33,16 +35,61 @@ const cta = "Start Marking!";
         document.documentElement.classList.remove("dark");
       }
     </script>
+
     <title>{title ? `${title} - ${websiteName}` : websiteName}</title>
   </head>
-  <body class="bg-ltbg2 dark:bg-dkbg2">
-    <Header
-      title={websiteName}
-      navs={navs.filter((nav) => nav.link !== "/")}
-      cta={cta}
-      client:load
-    />
-    <slot />
-  </body>
 
+  <body>
+    <div class="bg-surface presentation-layout">
+      <div class="tutorial-sidebar tutorial-sidebar-left">
+        <!-- Left tutorial content -->
+      </div>
+
+      <div class="presentation-content">
+        <Header
+          title={websiteName}
+          navs={navs.filter((nav) => nav.link !== "/")}
+          cta={cta}
+          client:load
+        />
+
+        <slot />
+      </div>
+
+      <div class="tutorial-sidebar tutorial-sidebar-right">
+        <!-- Right tutorial content -->
+      </div>
+    </div>
+  </body>
 </html>
+<style>
+/* Desktop presentation layout */
+.presentation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.presentation-content {
+  position: relative;
+  grid-column: 2;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+}
+
+.tutorial-sidebar {
+  min-width: 0;
+}
+
+/* Mobile: content uses the full viewport */
+@media (max-width: 767px) {
+  .presentation-layout {
+    grid-template-columns: 0 minmax(0, 1fr) 0;
+  }
+
+  .tutorial-sidebar {
+    display: none;
+  }
+}
+</style>

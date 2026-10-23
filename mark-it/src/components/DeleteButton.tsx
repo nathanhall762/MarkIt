@@ -26,7 +26,7 @@ const setSelectedCollection = useAddSequenceStore((state) => state.setSelectedCo
   };
 
   return (
-    <button onClick={handleDelete} className="text-red-500 md:opacity-100 lg:opacity-50 border hover:opacity-100 hover:text-red-700 w-fit bg-ltbg1 dark:bg-dkbg1 p-2 rounded-full absolute right-0 m-2">
+    <button onClick={handleDelete} className="bg-surface-subtle text-danger md:opacity-100 lg:opacity-50 border hover:opacity-100 w-fit p-2 rounded-full absolute right-0 m-2">
       <Icon icon="bi:trash" height={24} width={24} />
     </button>
   );

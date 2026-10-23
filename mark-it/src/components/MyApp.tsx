@@ -2,9 +2,10 @@ import Nav from './Nav';
 import { useStepComponents } from '../StepConfiguration';
 import React, { useEffect, useRef } from 'react';
 import useAddSequenceStore, { useAuthStore } from '../ZustandStore';
-import ItemPageContainer from './ItemModal';
+import ItemPageContainer from './ItemPageContainer';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+
 
 const MyApp: React.FC = () => {
   const stepComponents = useStepComponents();
@@ -118,20 +119,33 @@ const MyApp: React.FC = () => {
 
 
   return (
-    <div className='mx-auto bg-primary-2 dark:bg-primary-9 relative top-[7.5vh] box-border'>
-      <div className='mb-[12vh] pt-[4vh] pb-[16vh] min-h-[80.5vh] flex items-center flex-col justify-evenly overflow-clip'>
+    <div
+      id="MyApp"
+      className="absolute size-full mx-auto box-border min-h-screen bg-page pt-[7.5vh]"
+    >
+      <div id="WorkflowContainer" className='flex items-center h-full flex-col relative justify-top align-top overflow-clip'>
         {/* Workflow elements are configured in StepConfiguration rather than
     hardcoded into the app shell. */}
         {stepComponents.map((Component, index) => (
           <React.Fragment key={index}>{Component}</React.Fragment>
         ))}
+
       </div>
 
       {/* The item detail page is shown separately from the workflow steps. */}
       {itemPageVisible && <ItemPageContainer />}
 
       <Nav />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-[25vh]"
+        style={{
+          background:
+            'linear-gradient(to bottom, transparent 0%, var(--page-background) 100%)',
+        }}
+      />
     </div>
+
   );
 };
 

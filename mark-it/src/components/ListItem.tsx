@@ -11,9 +11,9 @@ const ListItem: React.FC<Item> = ({
   const collectionId = useAddSequenceStore((state) => state.selectedCollection);
   const userId = useAuthStore((state) => state.user?.uid);
   return (
-    <div className="flex w-full items-center justify-between p-4 border-b h-32">
+    <div className="flex w-full items-center justify-between p-4 border-b h-32 bg-surface-subtle">
       <img src={photos[0]} alt={title} className="w-20 h-20 object-cover mr-4" />
-      <div className="flex-grow overflow-hidden">
+      <div className="grow overflow-hidden">
         <h5 className="text-lg font-bold truncate">{title}</h5>
         <p className="text-ellipsis overflow-hidden line-clamp-2">{description}</p>
       </div>
