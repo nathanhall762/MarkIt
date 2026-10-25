@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 import useAddSequenceStore from '../ZustandStore.tsx';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase.ts';
-import type { Item } from '../types/items.ts';
+import type { Item } from '../types/item.ts';
 
 const ItemPageContainer: React.FC = () => {
   const [itemDetails, setItemDetails] = useState<Item | null>(null);

@@ -1,4 +1,4 @@
-import type {Item} from '../types/items.ts';
+import type {Item} from '../types/item.ts';
 import DeleteButton from './DeleteButton';
 import useAddSequenceStore, {useAuthStore} from '../ZustandStore';
 

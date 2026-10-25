@@ -1,4 +1,4 @@
-import type { Item } from '../types/items.ts';
+import type { Item } from '../types/item.ts';
 import ItemImageCarousel from './ItemImageCarousel';
 
 const ItemPage: React.FC<Item> = ({
@@ -13,7 +13,7 @@ const ItemPage: React.FC<Item> = ({
 }) => {
   const maxPrice = typeof priceRange === 'object' ? priceRange.max : priceRange;
   return (
-    <div id='ItemPage' className='flex relative flex-col w-[90vw] text-center justify-start h-full max-w-lg py-4'>
+    <div id='ItemPage' className='flex relative flex-col w-full text-center justify-start h-full max-w-lg py-4'>
       <div className='py-2 border mb-4 bg-surface-brand'>{title}</div>
       <ItemImageCarousel
         photos={photos}

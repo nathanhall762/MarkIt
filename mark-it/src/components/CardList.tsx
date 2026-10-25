@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import ItemCard from './ItemCard';
 import ListItem from './ListItem';
 import useAddSequenceStore from '../ZustandStore';
-import type { Item } from '../types/items.ts';
+import type { Item } from '../types/item.ts';
 // Optionally, if `CardList` needs props like `userId` and `collectionId`, define an interface for them
 interface CardListProps {
   userId: string;
