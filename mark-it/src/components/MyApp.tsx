@@ -123,6 +123,14 @@ const MyApp: React.FC = () => {
       id="MyApp"
       className="absolute size-full mx-auto box-border min-h-screen bg-page pt-[7.5vh]"
     >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 top-[7.5vh] z-30 h-[15vh]"
+        style={{
+          background:
+            'linear-gradient(to bottom, var(--page-background) 0%, transparent 100%)',
+        }}
+      />
       <div id="WorkflowContainer" className='flex items-center h-full flex-col relative justify-top align-top overflow-clip'>
         {/* Workflow elements are configured in StepConfiguration rather than
     hardcoded into the app shell. */}

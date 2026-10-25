@@ -93,8 +93,10 @@ const DropdownSelector = () => {
 
   return (
     <div
-      id='DropDownSelector' className='relative mb-4 mt-8'
-      ref={dropdownRef}>
+      id="DropDownSelector"
+      className="absolute top-8 left-0 right-0 z-50"
+      ref={dropdownRef}
+    >
       <div
         className='bg-surface-subtle border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer'
         onClick={toggleDropdown}>

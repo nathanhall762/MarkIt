@@ -49,7 +49,10 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
 
 
   return (
-    <div id='CardList' className='flex flex-wrap w-full flex-row justify-center gap-4'>
+    <div
+      id="CardList"
+      className="flex flex-row flex-wrap justify-center gap-4 w-full py-24 min-h-0 overflow-y-auto"
+    >
       {items.map((item) =>
         isListView ? (
           <ListItem
@@ -61,7 +64,7 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
             key={item.itemDetails.QRCode}
             {...item} // Spread item props
           />
-          
+
         )
       )}
       <button

@@ -17,7 +17,7 @@ const ItemCard: React.FC<Item> = ({
   };
   
   return (
-    <div className="bg-surface-subtle flex flex-col w-full mx-4 max-w-sm rounded-3xl text-center justify-stretch border relative shadow-xl" onClick={handleClick}>
+    <div className="bg-surface-subtle flex flex-col w-full m-4 max-w-sm rounded-3xl text-center justify-stretch border relative shadow-xl" onClick={handleClick}>
       <div className="w-full rounded-t-3xl">
         <img
           className="w-full aspect-square object-cover rounded-t-3xl"
