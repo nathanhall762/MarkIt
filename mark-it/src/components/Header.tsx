@@ -4,7 +4,7 @@ import menuIcon from '@iconify/icons-mdi/menu';
 import closeIcon from '@iconify/icons-mdi/close';
 import Button from './Button';
 import { handleLogOut } from '../auth/logout';
-import useAuthStore from '../ZustandStore';
+
 
 
 interface HeaderProps {
@@ -39,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ title, navs }) => {
 
   return (
     <header
-      id='Header' className={`absolute top-0 z-40 @container h-[7.5vh] flex w-full justify-between px-4 py-2 text-center align-middle transition-all duration-1000 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-surface-brand @lg:hover:bg-opacity-100`}
+      id='Header' className={`absolute top-0 z-40 @container h-[7.5vh] flex w-full justify-between px-4 py-2 text-center align-middle transition-all duration-1000 ${isScrolled ? 'bg-opacity-100' : 'bg-opacity-100 dark:bg-opacity-100'} bg-brand-primary @lg:hover:bg-opacity-100`}
     >
       <div className='items-center justify-center align-middle @lg:col-span-1 flex'>
         <h2 className='text-center text-2xl text-black transition-all duration-300 hover:text-accent dark:text-white'>

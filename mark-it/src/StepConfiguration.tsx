@@ -2,17 +2,15 @@ import DropDownSelector from './components/DropDownSelector';
 import ItemCard from './components/ItemCard';
 import QRScannerViewport from './components/QRScannerViewport';
 import ActionTypeSelector from './components/ActionTypeSelector';
-import CameraDrawer from './components/CameraDrawer';
 import ItemPage from './components/ItemPage';
-import {
-  InputDrawerTitle,
-  InputDrawerDescription,
-} from './components/InputDrawer';
+import InputDrawer from './components/InputDrawer';
 import PriceSlider from './components/PriceSlider';
 import Login from './components/Login';
 import type { WorkflowStep } from './WorkflowSteps';
 import useAddSequenceStore, { useAuthStore } from './ZustandStore';
 import CardList from './components/CardList';
+import CameraInput from './components/CameraInput';
+import TextInput from './components/TextInput';
 
 type StepComponents = Record<
   WorkflowStep,
@@ -40,91 +38,92 @@ export const useStepComponents = () => {
         : [<Login />],
     'scan-qr': () => [<QRScannerViewport />],
     'choose-action': () => [<DropDownSelector />, <ActionTypeSelector />],
+
     'take-photo': () => [
       <ItemCard
         actionType={actionType}
         itemDetails={{
-          QRCode: QRCode,
+          QRCode,
           collectionName: selectedCollection,
           createdAt: '',
-          description: description,
+          description,
           photos: [photo1],
-          priceRange: {
-            max: priceRange[1],
-            min: priceRange[0],
-          },
-          title: title,
+          priceRange: { max: priceRange[1], min: priceRange[0] },
+          title,
           updatedAt: '',
         }}
         userID={user?.uid ? user.uid : ''}
       />,
-      <CameraDrawer />,
+      <InputDrawer>
+        <CameraInput />
+      </InputDrawer>,
     ],
+
     'edit-title': () => [
       <ItemPage
         actionType={actionType}
         itemDetails={{
-          QRCode: QRCode,
+          QRCode,
           collectionName: selectedCollection,
           createdAt: '',
-          description: description,
+          description,
           photos: [photo1],
-          priceRange: {
-            max: priceRange[1],
-            min: priceRange[0],
-          },
-          title: title,
+          priceRange: { max: priceRange[1], min: priceRange[0] },
+          title,
           updatedAt: '',
         }}
         userID={user?.uid ? user.uid : ''}
       />,
-      <InputDrawerTitle rows={2} />,
+      <InputDrawer>
+        <TextInput field="title" rows={2} commitStep="review" />
+      </InputDrawer>,
     ],
+
     'edit-description': () => [
       <ItemPage
         actionType={actionType}
         itemDetails={{
-          QRCode: QRCode,
+          QRCode,
           collectionName: selectedCollection,
           createdAt: '',
-          description: description,
+          description,
           photos: [photo1],
-          priceRange: {
-            max: priceRange[1],
-            min: priceRange[0],
-          },
-          title: title,
+          priceRange: { max: priceRange[1], min: priceRange[0] },
+          title,
           updatedAt: '',
         }}
         userID={user?.uid ? user.uid : ''}
       />,
-      <InputDrawerDescription rows={4} />,
+      <InputDrawer>
+        <TextInput field="description" rows={4} commitStep="set-price" />
+      </InputDrawer>,
     ],
+
     'set-price': () => [
       <ItemPage
         actionType={actionType}
         itemDetails={{
-          QRCode: QRCode,
+          QRCode,
           collectionName: selectedCollection,
           createdAt: '',
-          description: description,
+          description,
           photos: [photo1],
-          priceRange: {
-            max: priceRange[1],
-            min: priceRange[0],
-          },
-          title: title,
+          priceRange: { max: priceRange[1], min: priceRange[0] },
+          title,
           updatedAt: '',
         }}
         userID={user?.uid ? user.uid : ''}
       />,
-      <PriceSlider
-        instructions='Select acceptable price minimum and maximum.'
-        min={0}
-        max={500}
-        step={5}
-      />,
+      <InputDrawer>
+        <PriceSlider
+          instructions="Select acceptable price minimum and maximum."
+          min={0}
+          max={500}
+          step={5}
+        />
+      </InputDrawer>,
     ],
+
     'review': () => [
       <ItemPage
         actionType={actionType}

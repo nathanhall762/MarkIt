@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import useAddSequenceStore from '../ZustandStore';
 
@@ -12,7 +13,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
   min,
   max,
   step,
-  instructions: dataName,
+  instructions,
 }) => {
   const priceRange = useAddSequenceStore((state) => state.priceRange);
   const setPriceRange = useAddSequenceStore((state) => state.setPriceRange);
@@ -24,6 +25,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
       parseInt(event.target.value, 10),
       upperValue - step
     );
+
     setLowerValue(newValue);
     setPriceRange([newValue, upperValue]);
   };
@@ -33,38 +35,42 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
       parseInt(event.target.value, 10),
       lowerValue + step
     );
+
     setUpperValue(newValue);
     setPriceRange([lowerValue, newValue]);
   };
 
   return (
-    <div className='h-fit w-screen mx-auto rounded-t-3xl text-center bg-surface-brand fixed bottom-[12vh] py-8 border-t flex flex-col'>
-      <h2 className='mb-2 px-4'>{dataName}</h2>
-      <div style={{ padding: '20px' }}>
+    <div className="flex h-fit w-full flex-col py-8 text-center">
+      <h2 className="mb-2 px-4">{instructions}</h2>
+
+      <div className="px-5 py-4">
         <input
-          type='range'
+          type="range"
           min={min}
           max={max}
           value={lowerValue}
           step={step}
           onChange={handleLowerChange}
-          className='slider'
-          style={{ zIndex: lowerValue > max - (max - min) / 2 ? '5' : '1' }} // Ensures the lower slider is accessible
+          className="slider"
+          style={{
+            zIndex: lowerValue > max - (max - min) / 2 ? 5 : 1,
+          }}
         />
+
         <input
-          type='range'
+          type="range"
           min={min}
           max={max}
           value={upperValue}
           step={step}
           onChange={handleUpperChange}
-          className='slider'
+          className="slider"
         />
-        <div className='text-center'>
-          <p>
-            Price range: ${lowerValue} - ${upperValue}
-          </p>
-        </div>
+
+        <p className="text-center">
+          Price range: ${lowerValue} - ${upperValue}
+        </p>
       </div>
     </div>
   );
