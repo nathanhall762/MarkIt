@@ -17,7 +17,7 @@ const ActionTypeSelector = () => {
     `border p-2 rounded-full ${
       actionType === buttonActionType
         ? 'bg-green-500'
-        : 'bg-ltbg2 dark:bg-dkbg2'
+        : 'bg-surface-subtle'
     }`;
 
   return (

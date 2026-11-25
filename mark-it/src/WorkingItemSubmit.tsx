@@ -1,4 +1,4 @@
-import useAddSequenceStore, { useAuthStore  } from './ZustandStore';
+import useAddSequenceStore, { useAuthStore } from './ZustandStore';
 import { firebaseApp } from './firebase';
 import { getFirestore, collection, doc, setDoc, addDoc } from 'firebase/firestore';
 
@@ -16,6 +16,9 @@ const useWorkingItemSubmit = () => {
   const title = useAddSequenceStore((state) => state.title);
   const description = useAddSequenceStore((state) => state.description);
   const priceRange = useAddSequenceStore((state) => state.priceRange);
+  const setCurrentStep = useAddSequenceStore(
+    (state) => state.setCurrentStep
+  );
 
   const submit = async () => {
     // Validate that user is not null
@@ -45,11 +48,13 @@ const useWorkingItemSubmit = () => {
 
     // Reference to the specific item document using the QR code as the document ID
     const itemDocRef = doc(db, 'Items', QRCode);
-    
+
     // Set the document in the Items collection
     try {
       await setDoc(itemDocRef, itemData);
       console.log('Item submitted successfully');
+
+      setCurrentStep('select-collection');
     } catch (error) {
       console.error('Error submitting item:', error);
     }

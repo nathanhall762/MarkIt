@@ -1,0 +1,169 @@
+@import "tailwindcss";
+
+/*
+ * Brand primitives
+ * Replace these example values with MarkIt's chosen brand colors.
+ * These remain stable across light and dark themes.
+ */
+:root {
+  --brand-primary: #9c26e6;
+  --brand-secondary: #334155;
+  --brand-accent: #e59500;
+
+  /*
+   * Neutral primitives
+   * Shared anchors for text, backgrounds, borders, and icons.
+   */
+  --neutral-dark: #171717;
+  --neutral-light: #f5f5f5;
+
+  /*
+   * Status primitives
+   * Independent of the brand, but selected to work alongside it.
+   */
+  --status-success: #15803d;
+  --status-warning: #a16207;
+  --status-danger: #b91c1c;
+
+  /*
+   * Light theme roles
+   */
+  color-scheme: light;
+
+  --page-background: #f8fafc;
+  --surface-background: #ffffff;
+  --surface-subtle: #f1f5f9;
+  --surface-brand: color-mix(in srgb,
+      var(--brand-primary) 5%,
+      var(--page-background));
+  --surface-selected: color-mix(in srgb,
+      var(--brand-primary) 14%,
+      var(--page-background));
+  --surface-secondary: color-mix(in srgb,
+      var(--brand-secondary) 5%,
+      var(--page-background));
+  --text-primary: var(--neutral-dark);
+  --text-secondary: #52525b;
+  --text-disabled: #a1a1aa;
+
+  --border-color: #e4e4e7;
+
+  --action-primary: var(--brand-primary);
+  --action-primary-hover: color-mix(in srgb,
+      var(--brand-primary) 85%,
+      black);
+  --on-action-primary: #ffffff;
+
+  --success-background: #f0fdf4;
+  --warning-background: #fffbeb;
+  --danger-background: #fef2f2;
+}
+
+/*
+ * Dark theme roles
+ * Brand primitives stay the same; UI roles adapt.
+ */
+.dark {
+  color-scheme: dark;
+
+  --page-background: #111315;
+  --surface-background: #1c1f22;
+  --surface-subtle: #25292d;
+  --surface-brand: color-mix(in srgb,
+      var(--brand-primary) 12%,
+      var(--page-background));
+  --surface-selected: color-mix(in srgb,
+      var(--brand-primary) 24%,
+      var(--page-background));
+  --surface-secondary: color-mix(in srgb,
+      var(--brand-secondary) 12%,
+      var(--page-background));
+
+  --text-primary: #f5f5f5;
+  --text-secondary: #b4b4bc;
+  --text-disabled: #71717a;
+
+  --border-color: #383b40;
+
+  --action-primary: var(--brand-primary);
+  --action-primary-hover: color-mix(in srgb,
+      var(--brand-primary) 85%,
+      white);
+  --on-action-primary: #ffffff;
+
+  --success-background: #14291b;
+  --warning-background: #302512;
+  --danger-background: #321b1b;
+}
+
+/*
+ * Tailwind utilities
+ */
+@theme inline {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+
+  --color-neutral-dark: var(--neutral-dark);
+  --color-neutral-light: var(--neutral-light);
+
+  --color-success: var(--status-success);
+  --color-warning: var(--status-warning);
+  --color-danger: var(--status-danger);
+
+  --color-page: var(--page-background);
+  --color-surface: var(--surface-background);
+  --color-surface-subtle: var(--surface-subtle);
+  --color-surface-brand: var(--surface-brand);
+  --color-surface-selected: var(--surface-selected);
+  --color-surface-secondary: var(--surface-secondary);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
+
+  --color-border: var(--border-color);
+
+  --color-action-primary: var(--action-primary);
+  --color-action-primary-hover: var(--action-primary-hover);
+  --color-on-action-primary: var(--on-action-primary);
+
+  --color-success-background: var(--success-background);
+  --color-warning-background: var(--warning-background);
+  --color-danger-background: var(--danger-background);
+}
+
+/*
+ * Global base styles
+ */
+html {
+  font-family: Calibre, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--page-background);
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--page-background);
+  color: var(--text-primary);
+}
+
+input,
+textarea,
+select {
+  color: var(--text-primary);
+  background-color: var(--surface-background);
+  border-color: var(--border-color);
+}
+
+code {
+  font-family:
+    Menlo, Monaco, "Lucida Console", "Liberation Mono",
+    "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New",
+    monospace;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}

@@ -4,7 +4,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import ItemCard from './ItemCard';
 import ListItem from './ListItem';
 import useAddSequenceStore from '../ZustandStore';
-import type { Item } from '../types/items.ts';
+import type { Item } from '../types/item.ts';
 // Optionally, if `CardList` needs props like `userId` and `collectionId`, define an interface for them
 interface CardListProps {
   userId: string;
@@ -49,7 +49,10 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
 
 
   return (
-    <div className='flex flex-wrap w-screen flex-row justify-center gap-4'>
+    <div
+      id="CardList"
+      className="flex flex-col justify-top items-center gap-4 pt-24 pb-32 overflow-y-auto"
+    >
       {items.map((item) =>
         isListView ? (
           <ListItem
@@ -61,11 +64,12 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
             key={item.itemDetails.QRCode}
             {...item} // Spread item props
           />
+
         )
       )}
       <button
         onClick={() => setIsListView(!isListView)}
-        className='fixed bottom-[13vh] right-2 p-4 border bg-ltbg2 dark:bg-dkbg2 text-white rounded-full shadow-lg'>
+        className='absolute bottom-[13vh] right-2 p-4 border bg-surface-subtle text-white rounded-full shadow-lg'>
         {isListView ? (
           <svg
             xmlns='http://www.w3.org/2000/svg'

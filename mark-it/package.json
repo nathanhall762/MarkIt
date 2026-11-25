@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "build:large": "NODE_OPTIONS='--max-old-space-size=4096' astro check && NODE_OPTIONS='--max-old-space-size=4096' astro build",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "astro check && astro build && firebase deploy --only hosting"
@@ -14,7 +15,7 @@
     "@astrojs/check": "^0.5.6",
     "@astrojs/node": "^8.2.5",
     "@astrojs/react": "^3.0.10",
-    "@astrojs/tailwind": "^5.1.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/react": "^18.2.58",
     "@types/react-dom": "^18.2.19",
     "astro": "^4.4.5",
@@ -24,7 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.3.3",
     "zustand": "^4.5.1"
   },
