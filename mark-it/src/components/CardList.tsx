@@ -51,7 +51,7 @@ const CardList: React.FC<CardListProps> = ({ userId }) => {
   return (
     <div
       id="CardList"
-      className="flex flex-row flex-wrap justify-center gap-4 w-full py-24 min-h-0 overflow-y-auto"
+      className="flex flex-col justify-top items-center gap-4 pt-24 pb-32 overflow-y-auto"
     >
       {items.map((item) =>
         isListView ? (

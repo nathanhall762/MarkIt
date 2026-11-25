@@ -94,15 +94,16 @@ const DropdownSelector = () => {
   return (
     <div
       id="DropDownSelector"
-      className="absolute top-8 left-0 right-0 z-50"
+      className="absolute top-8 left-0 right-0 mx-12 z-50"
       ref={dropdownRef}
     >
       <div
-        className='bg-surface-subtle border rounded-full flex flex-row w-72 mx-auto p-2 justify-between text-center cursor-pointer'
+        className='bg-surface-subtle border rounded-full flex flex-row  p-2 justify-between text-center cursor-pointer'
         onClick={toggleDropdown}>
         <div className='flex overflow-clip'>
           <h3 className='px-2 overflow-clip'>
-            {selectedCollection || 'Select a Collection'}
+            {collections.find((collection) => collection.id === selectedCollection)
+              ?.collectionName || 'Select a Collection'}
           </h3>
         </div>
         <div className='w-16 flex justify-center items-center border-l-2'>
@@ -114,13 +115,13 @@ const DropdownSelector = () => {
         </div>
       </div>
       {isDropdownVisible && (
-        <div className='absolute z-10 w-72 border mt-1 rounded-md bg-surface-subtle'>
+        <div className='absolute z-10 w-full border mt-1 rounded-md bg-surface-subtle'>
           {collections.map((collection) => (
             <div
               key={collection.id} // Use collection.id instead of collection.ownerId
               onClick={() => handleSelectCollection(collection.id)}
               className='p-2 text-black dark:text-white cursor-pointer dark:hover:bg-dkbg2'>
-              {collection.collectionName} - <span className='opacity-50'>{selectedCollection}</span>
+              {collection.collectionName}
             </div>
           ))}
 
